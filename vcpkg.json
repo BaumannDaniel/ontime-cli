@@ -1,0 +1,7 @@
+{
+  "name": "ontime-cli",
+  "version-string": "1.0",
+  "dependencies": [
+    "cli"
+  ]
+}
