@@ -3,7 +3,7 @@
   "version-string": "1.0",
   "dependencies": [
     "cli",
-    "sdbus-cpp",
+    "portaudio",
     "gtest"
   ]
 }
