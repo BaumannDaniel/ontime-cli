@@ -1,2 +1,2 @@
 add_executable(tone_cli app.cpp)
-#add_library(ontime_main)
+target_include_directories(tone_cli PRIVATE ${MINIAUDIO_INCLUDE_DIRS})
