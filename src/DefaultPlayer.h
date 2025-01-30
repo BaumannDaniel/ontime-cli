@@ -4,28 +4,29 @@
 
 #include "Player.h"
 
-struct InputFileConfig {
+struct PlayerConfig {
     std::string file;
 };
 
 class DefaultPlayer : Player {
     ma_device device;
     ma_device_config deviceConfig;
-    ma_encoder_config encoderConfig;
-    ma_encoder encoder;
+    ma_decoder_config decoderConfig;
+    ma_decoder decoder;
 
-    static void capture_callback(ma_device *pDevice, void *_, const void *pInput, ma_uint32 frameCount) {
-        auto *pEncoder = static_cast<ma_encoder *>(pDevice->pUserData);
-        if (pEncoder == nullptr) return;
-        ma_encoder_write_pcm_frames(pEncoder, pInput, frameCount, nullptr);
+    static void play_callback(ma_device *pDevice, void *pOutput, const void *pInput, ma_uint32 frameCount) {
+        auto *pDecoder = static_cast<ma_decoder *>(pDevice->pUserData);
+        if (pDecoder == nullptr) return;
+        ma_decoder_read_pcm_frames(pDecoder, pOutput, frameCount, nullptr);
+        (void) pInput;
     }
 
 public:
-    explicit DefaultRecorder(const OutputFileConfig& outputFileConfig);
+    explicit DefaultPlayer(const PlayerConfig &inputFileConfig);
 
-    ~DefaultRecorder() override;
+    ~DefaultPlayer() override;
 
-    void record() override;
+    void play() override;
 
     void pause() override;
 
