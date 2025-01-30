@@ -1,5 +1,7 @@
 #include "DefaultRecorder.h"
 
+#include <stdexcept>
+
 DefaultRecorder::DefaultRecorder(const OutputFileConfig &outputFileConfig) {
     this->encoderConfig = ma_encoder_config_init(
                               ma_encoding_format_wav,
@@ -7,7 +9,7 @@ DefaultRecorder::DefaultRecorder(const OutputFileConfig &outputFileConfig) {
                               2,
                               44100
                           );
-    if (ma_encoder_init_file("/home/daniel/Documents/tone_cli_workspace/test.wav", &encoderConfig, &encoder) != MA_SUCCESS) {
+    if (ma_encoder_init_file(outputFileConfig.file.c_str(), &encoderConfig, &encoder) != MA_SUCCESS) {
         throw std::runtime_error("Failed to intitialize file encoder!");
     }
     this->deviceConfig = ma_device_config_init(ma_device_type_capture);
@@ -18,12 +20,14 @@ DefaultRecorder::DefaultRecorder(const OutputFileConfig &outputFileConfig) {
     this->deviceConfig.pUserData = &encoder;
     if (ma_device_init(nullptr, &deviceConfig, &device) != MA_SUCCESS) {
         throw std::runtime_error("Failed to initialize recording device!");
-    };
+    }
     this->state = READY;
 }
 
 DefaultRecorder::~DefaultRecorder() {
-    ma_device_uninit(&device);
+    if (this->state != STOPPED) {
+        this->DefaultRecorder::stop();
+    }
 }
 
 void DefaultRecorder::start() {
@@ -33,9 +37,11 @@ void DefaultRecorder::start() {
 
 void DefaultRecorder::pause() {
     ma_device_stop(&device);
-    ma_device_uninit(&device);
-    ma_encoder_uninit(&encoder);
+    this->state = PAUSED;
 }
 
 void DefaultRecorder::stop() {
+    ma_device_uninit(&device);
+    ma_encoder_uninit(&encoder);
+    this->state = STOPPED;
 }
