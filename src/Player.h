@@ -1,17 +1,9 @@
 #pragma once
-
-enum PlayerState {
-    INIT,
-    FAILURE,
-    READY,
-    FINISHED,
-    PAUSED,
-    PLAYING
-};
+#include "DeviceState.h"
 
 class Player {
 public:
-    PlayerState state = INIT;
+    DeviceState state = INIT;
     virtual ~Player() = default;
     virtual void play() = 0;
     virtual void pause() = 0;
