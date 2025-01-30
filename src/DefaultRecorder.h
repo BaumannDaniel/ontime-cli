@@ -25,9 +25,9 @@ public:
 
     ~DefaultRecorder() override;
 
-    void start() override;
+    void record() override;
 
     void pause() override;
 
-    void stop() override;
+    void finish() override;
 };

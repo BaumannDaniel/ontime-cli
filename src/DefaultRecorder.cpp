@@ -25,12 +25,12 @@ DefaultRecorder::DefaultRecorder(const OutputFileConfig &outputFileConfig) {
 }
 
 DefaultRecorder::~DefaultRecorder() {
-    if (this->state != STOPPED) {
-        this->DefaultRecorder::stop();
+    if (this->state != FINISHED) {
+        this->DefaultRecorder::finish();
     }
 }
 
-void DefaultRecorder::start() {
+void DefaultRecorder::record() {
     ma_device_start(&device);
     this->state = RECORDING;
 }
@@ -40,8 +40,8 @@ void DefaultRecorder::pause() {
     this->state = PAUSED;
 }
 
-void DefaultRecorder::stop() {
+void DefaultRecorder::finish() {
     ma_device_uninit(&device);
     ma_encoder_uninit(&encoder);
-    this->state = STOPPED;
+    this->state = FINISHED;
 }

@@ -4,7 +4,7 @@ enum RecordingState {
     INIT,
     FAILURE,
     READY,
-    STOPPED,
+    FINISHED,
     PAUSED,
     RECORDING
 };
@@ -13,7 +13,7 @@ class Recorder {
 public:
     RecordingState state = INIT;
     virtual ~Recorder() = default;
-    virtual void start() = 0;
+    virtual void record() = 0;
     virtual void pause() = 0;
-    virtual void stop() = 0;
+    virtual void finish() = 0;
 };
