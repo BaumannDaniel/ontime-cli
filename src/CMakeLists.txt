@@ -3,6 +3,7 @@ add_library(
         Recorder.h
         DefaultRecorder.h DefaultRecorder.cpp
         Player.h
+        DefaultPlayer.h DefaultPlayer.cpp
 )
 target_include_directories(tone_lib PRIVATE ${MINIAUDIO_INCLUDE_DIRS})
 add_executable(tone_cli app.cpp)
