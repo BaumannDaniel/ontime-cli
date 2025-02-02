@@ -3,7 +3,7 @@ project(ontime_cli CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 find_path(MINIAUDIO_INCLUDE_DIRS "miniaudio.h")
-find_package(cli REQUIRED)
+find_package(ftxui REQUIRED)
 find_package(GTest REQUIRED)
 
 add_subdirectory(src)
