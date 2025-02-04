@@ -4,6 +4,7 @@
   "dependencies": [
     "ftxui",
     "miniaudio",
+    "rxcpp",
     "gtest"
   ]
 }
