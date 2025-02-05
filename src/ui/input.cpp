@@ -14,3 +14,21 @@ std::string tone::ui::trimWhitespace(std::string str) {
     return str;
 }
 
+std::vector<std::string> tone::ui::parseInput(std::string input) {
+    input = trimWhitespace(input);
+    std::vector<std::string> segments = {};
+    if (input.empty()) return segments;
+    u_int32_t i = 0;
+    u_int32_t y = 0;
+    while (i < input.size()) {
+        if (input.at(i) == WHITESPACE) {
+            segments.insert(segments.end(), input.substr(y, i - y));
+            i++;
+            y = i;
+            continue;
+        }
+        i++;
+    }
+    segments.insert(segments.end(), input.substr(y, i - y));
+    return segments;
+}
