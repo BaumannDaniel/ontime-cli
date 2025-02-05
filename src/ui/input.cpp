@@ -7,9 +7,9 @@ std::string tone::ui::trimWhitespace(std::string str) {
     if (str_begin == std::string::npos) return {};
     const auto str_end = str.find_last_not_of(WHITESPACE);
 
-    str = str.substr(str_begin, str_end - str_begin);
+    str = str.substr(str_begin, str_end + 1 - str_begin);
     for (int i = 1; i < str.size(); i++) {
-        if (str[i] == WHITESPACE && str[i - 1] == WHITESPACE) str.erase(i);
+        if (str[i] == WHITESPACE && str[i - 1] == WHITESPACE) str.erase(i, 1);
     }
     return str;
 }
