@@ -3,12 +3,17 @@
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/component/component_options.hpp>
 
+#include "MainInputProcessor.h"
+#include "Screen.h"
+
 namespace tone::ui {
-    class MainScreen {
+    class MainScreen : Screen {
+        MainInputProcessor main_input_processor;
         std::string main_input_value;
         ftxui::InputOption main_input_option = {
             .multiline = false,
             .on_enter = [&] {
+                main_input_processor.process(main_input_value);
                 main_input_value.clear();
             }
         };
@@ -25,18 +30,18 @@ namespace tone::ui {
         ftxui::Component settings_container = ftxui::Container::Vertical({});
         ftxui::Component tab_container = ftxui::Container::Tab(
             {
-                ftxui::Renderer(
+                Renderer(
                     editor_container,
                     [&] { return ftxui::text("1"); }
-                    ),
-                ftxui::Renderer(
+                ),
+                Renderer(
                     devices_container,
                     [&] { return ftxui::text("2"); }
-                    ),
-                ftxui::Renderer(
+                ),
+                Renderer(
                     settings_container,
                     [&] { return ftxui::text("3"); }
-                    )
+                )
             },
             &tab_selected
         );
@@ -60,7 +65,12 @@ namespace tone::ui {
                     tab_container->Render()
                 );
             });
+
     public:
-        ftxui::Component render();
+        explicit MainScreen(const MainInputProcessor &main_input_processor);
+
+        void start() override;
+        void stop() override;
+        ftxui::Component render() override;
     };
 }
