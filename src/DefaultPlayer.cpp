@@ -1,9 +1,11 @@
 #include "DefaultPlayer.h"
 
+#include <format>
 #include <stdexcept>
 
-DefaultPlayer::DefaultPlayer(const PlayerConfig &inputFileConfig) {
+DefaultPlayer::DefaultPlayer(const PlayerConfig &inputFileConfig, ToneLogger *toneLogger) {
     if (ma_decoder_init_file(inputFileConfig.file.c_str(), nullptr, &decoder) != MA_SUCCESS) {
+        toneLogger->log(std::format("Failed to init decoder for file: {}", inputFileConfig.file));
         throw std::runtime_error("Failed to initialize file decoder!");
     }
     this->deviceConfig = ma_device_config_init(ma_device_type_playback);
@@ -11,10 +13,17 @@ DefaultPlayer::DefaultPlayer(const PlayerConfig &inputFileConfig) {
     this->deviceConfig.playback.channels = decoder.outputChannels;
     this->deviceConfig.sampleRate = decoder.outputSampleRate;
     this->deviceConfig.dataCallback = play_callback;
+    CallbackConfig callbackConfig = {
+        .decoder = &decoder,
+        .logger = toneLogger
+    };
     this->deviceConfig.pUserData = &decoder;
     if (ma_device_init(nullptr, &deviceConfig, &device) != MA_SUCCESS) {
+        toneLogger->log("Failed to init playback!");
         throw std::runtime_error("Failed to initialize playback device!");
     }
+    logger = toneLogger;
+    logger->log("Device ready!");
     this->state = READY;
 }
 
@@ -25,8 +34,11 @@ DefaultPlayer::~DefaultPlayer() {
 }
 
 void DefaultPlayer::play() {
+    logger->log("Start playing!");
     ma_device_start(&device);
+    logger->log("Playing!");
     this->state = PLAYING;
+    logger->log("Set state playing!");
 }
 
 void DefaultPlayer::pause() {
