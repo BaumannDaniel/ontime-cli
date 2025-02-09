@@ -7,8 +7,10 @@
 #include "DefaultPlayer.h"
 #include "input.h"
 
-tone::ui::MainInputProcessor::MainInputProcessor(ToneLogger *toneLogger) {
-    logger = toneLogger;
+tone::ui::MainInputProcessor::MainInputProcessor(
+    DeviceFacade *deviceFacade, ToneLogger *toneLogger
+) : logger(toneLogger),
+    deviceFacade(deviceFacade) {
 }
 
 
@@ -16,16 +18,26 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
     this->logger->log(std::format("Received input: {}", input));
     auto parsedInput = parseInput(std::move(input));
     if (parsedInput.empty()) return;
-    if (parsedInput[0] == "play") {
+    if (parsedInput[0] == InputCommands::PLAY) {
         if (parsedInput.size() < 2) return;
-        auto player = new DefaultPlayer(
+        auto *player = new DefaultPlayer(
             {
                 .file = parsedInput[1]
             },
             logger
         );
-        this->logger->log(parsedInput[1]);
-        this->logger->log("Starting player");
-        player->play();
+        auto playerId = deviceFacade->addPlayer(player);
+        deviceFacade->startPlayer(playerId);
+        return;
+    }
+    if (parsedInput[0] == InputCommands::START) {
+        if (parsedInput.size() < 2) return;
+        uint64_t playerId = stoi(parsedInput[1]);
+        deviceFacade->startPlayer(playerId);
+    }
+    if (parsedInput[0] == InputCommands::STOP) {
+        if (parsedInput.size() < 2) return;
+        uint64_t playerId = stoi(parsedInput[1]);
+        deviceFacade->pausePlayer(playerId);
     }
 }
