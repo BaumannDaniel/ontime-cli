@@ -16,7 +16,7 @@ struct CallbackConfig {
     ToneLogger *logger;
 };
 
-class DefaultPlayer : Player {
+class DefaultPlayer : public Player {
     ToneLogger *logger;
     ma_device device{};
     ma_device_config deviceConfig{};
