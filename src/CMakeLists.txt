@@ -5,7 +5,17 @@ add_library(
         Player.h
         DefaultPlayer.h DefaultPlayer.cpp
         DeviceState.h
+        DeviceFacade.h DeviceFacade.cpp
+        logging.h logging.cpp
+        ui/Screen.h
         ui/MainScreen.h ui/MainScreen.cpp
+        ui/MainInputProcessor.h ui/MainInputProcessor.cpp
+        ui/input.h ui/input.cpp
+)
+target_include_directories(
+        tone_lib
+        PUBLIC ${CMAKE_CURRENT_LIST_DIR}
+        PUBLIC ${CMAKE_CURRENT_LIST_DIR}/ui
 )
 target_include_directories(tone_lib PRIVATE ${MINIAUDIO_INCLUDE_DIRS})
 add_executable(tone_cli app.cpp)
@@ -16,4 +26,5 @@ target_link_libraries(
         PRIVATE ftxui::dom
         PRIVATE ftxui::screen
         PRIVATE ftxui::component
+        PRIVATE rxcpp
 )
