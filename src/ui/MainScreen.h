@@ -8,9 +8,9 @@
 
 namespace tone::ui {
     struct MainScreenTabs {
-        constexpr std::string EDITOR = "Editor";
-        constexpr std::string DEVICES = "Devices";
-        constexpr std::string SETTINGS = "Settings";
+        static constexpr std::string EDITOR = "Editor";
+        static constexpr std::string DEVICES = "Devices";
+        static constexpr std::string SETTINGS = "Settings";
     };
 
     class MainScreen : Screen {
