@@ -9,6 +9,7 @@ add_library(
         logging.h logging.cpp
         ui/Screen.h
         ui/MainScreen.h ui/MainScreen.cpp
+        ui/EditorScreen.h ui/EditorScreen.cpp
         ui/MainInputProcessor.h ui/MainInputProcessor.cpp
         ui/input.h ui/input.cpp
 )

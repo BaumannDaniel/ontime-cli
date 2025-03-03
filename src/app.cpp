@@ -15,28 +15,18 @@
 #include "ui/MainScreen.h"
 
 int main() {
-    std::string audioFile = "/home/daniel/Documents/tone_cli_workspace/test-track1.mp3";
-    // auto recorder = DefaultRecorder(
-    //     {
-    //         .file = audioFile
-    //     }
-    // );
-    // recorder.record();
-    // printf("Press Enter to stop recording...\n");
-    // getchar();
-    // recorder.finish();
     auto log_file = "/home/daniel/Documents/tone_cli_workspace/log.txt";
     auto logger = ToneLogger(log_file);
-    auto player = DefaultPlayer(
-        {
-            .file = audioFile
-        },
-        &logger
-    );
-    player.play();
     logger.log("----- Started Tone CLI -----");
-    auto main_input_processor = tone::ui::MainInputProcessor(&logger);
-    auto main_screen = tone::ui::MainScreen(main_input_processor);
+    auto device_facade = tone::DeviceFacade();
+    auto main_input_processor = tone::ui::MainInputProcessor(&device_facade, &logger);
+    auto main_screen = std::make_shared<tone::ui::MainScreen>(main_input_processor, &logger);
     auto screen = ftxui::ScreenInteractive::TerminalOutput();
-    screen.Loop(main_screen.render());
+    std::thread update([&] {
+        while (true) {
+            sleep(1);
+            screen.PostEvent(ftxui::Event::Custom);
+        }
+    });
+    screen.Loop(main_screen->render());
 }

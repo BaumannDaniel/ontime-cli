@@ -3,6 +3,7 @@
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/component/component_options.hpp>
 
+#include "EditorScreen.h"
 #include "MainInputProcessor.h"
 #include "Screen.h"
 
@@ -14,7 +15,9 @@ namespace tone::ui {
     };
 
     class MainScreen : Screen {
+        ToneLogger *logger;
         MainInputProcessor main_input_processor;
+        EditorScreen editor_screen;
         std::string main_input_value;
         ftxui::InputOption main_input_option;
         ftxui::Component main_input;
@@ -33,7 +36,7 @@ namespace tone::ui {
         ftxui::Component renderer;
 
     public:
-        explicit MainScreen(const MainInputProcessor &main_input_processor);
+        explicit MainScreen(const MainInputProcessor &main_input_processor, ToneLogger *toneLogger);
 
         void start() override;
 
