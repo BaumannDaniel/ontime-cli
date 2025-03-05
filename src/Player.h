@@ -7,8 +7,10 @@
 
 namespace tone {
     class Player {
-    public:
+    protected:
         DeviceState state = INIT;
+    public:
+        virtual DeviceState getDeviceState();
         virtual ~Player() = default;
         virtual void play() = 0;
         virtual void pause() = 0;
