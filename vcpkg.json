@@ -4,6 +4,7 @@
   "dependencies": [
     "ftxui",
     "miniaudio",
+    "boost-uuid",
     "rxcpp",
     "gtest"
   ]

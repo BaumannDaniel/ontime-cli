@@ -2,7 +2,7 @@ add_library(
         tone_lib
         Recorder.h
         DefaultRecorder.h DefaultRecorder.cpp
-        Player.h
+        Player.h Player.cpp
         DefaultPlayer.h DefaultPlayer.cpp
         DeviceState.h
         DeviceFacade.h DeviceFacade.cpp
@@ -12,6 +12,10 @@ add_library(
         ui/EditorScreen.h ui/EditorScreen.cpp
         ui/MainInputProcessor.h ui/MainInputProcessor.cpp
         ui/input.h ui/input.cpp
+)
+target_link_libraries(
+        tone_lib
+        PRIVATE Boost::uuid
 )
 target_include_directories(
         tone_lib
