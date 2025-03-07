@@ -10,20 +10,22 @@ namespace tone {
 
     class Player {
     protected:
-        DeviceState state = INIT;
+        DeviceState state = UNINIT;
 
     public:
         virtual DeviceState getDeviceState();
 
         virtual ~Player() = default;
 
+        virtual PlayerInfo get_player_info() = 0;
+
+        virtual void init() = 0;
+
         virtual void play() = 0;
 
         virtual void pause() = 0;
 
         virtual void finish() = 0;
-
-        virtual PlayerInfo get_player_info() = 0;
     };
 
     class PlayerInfo {

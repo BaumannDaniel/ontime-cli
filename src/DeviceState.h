@@ -1,11 +1,13 @@
 #pragma once
 
-enum DeviceState {
-    INIT,
-    FAILURE,
-    READY,
-    FINISHED,
-    PAUSED,
-    RECORDING,
-    PLAYING
-};
+namespace tone {
+    enum DeviceState {
+        UNINIT,
+        FAILED,
+        READY,
+        FINISHED,
+        PAUSED,
+        RECORDING,
+        PLAYING
+    };
+}
