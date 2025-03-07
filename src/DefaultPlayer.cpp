@@ -18,6 +18,14 @@ tone::DefaultPlayer::~DefaultPlayer() {
     }
 }
 
+void tone::DefaultPlayer::play_callback(ma_device *pDevice, void *pOutput, const void *pInput, ma_uint32 frameCount) {
+    auto *pDecoder = static_cast<ma_decoder *>(pDevice->pUserData);
+    if (pDecoder == nullptr) return;
+    ma_decoder_read_pcm_frames(pDecoder, pOutput, frameCount, nullptr);
+    (void) pInput;
+}
+
+
 void tone::DefaultPlayer::init() {
     if (ma_decoder_init_file(file_name.c_str(), nullptr, &decoder) != MA_SUCCESS) {
         logger->log(std::format("Failed to init decoder for file: {}", file_name));
