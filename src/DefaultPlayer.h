@@ -30,9 +30,8 @@ namespace tone {
 
     public:
         DefaultPlayer(
-            boost::uuids::uuid player_id,
             std::string file_name,
-            std::shared_ptr<ToneLogger> &toneLogger
+            std::shared_ptr<ToneLogger> toneLogger
             );
 
         ~DefaultPlayer() override;

@@ -5,12 +5,11 @@
 #include <boost/uuid/uuid_generators.hpp>
 
 tone::DefaultPlayer::DefaultPlayer(
-    boost::uuids::uuid player_id,
     std::string file_name,
-    std::shared_ptr<ToneLogger> &toneLogger
-) : id(player_id),
-    file_name(file_name),
-    logger(toneLogger) {
+    std::shared_ptr<ToneLogger> toneLogger
+) : logger(toneLogger),
+    file_name(file_name) {
+    this->id = boost::uuids::random_generator()();
 }
 
 tone::DefaultPlayer::~DefaultPlayer() {
