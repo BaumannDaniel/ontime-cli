@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <string>
 
 #include "DeviceFacade.h"
@@ -12,11 +13,11 @@ namespace tone::ui {
     };
 
     class MainInputProcessor {
-        ToneLogger *logger;
+        std::shared_ptr<ToneLogger> logger;
         DeviceFacade *deviceFacade;
 
     public:
-        MainInputProcessor(DeviceFacade *deviceFacade, ToneLogger *toneLogger);
+        MainInputProcessor(DeviceFacade *deviceFacade, std::shared_ptr<ToneLogger> &toneLogger);
 
         void process(std::string input) const;
     };

@@ -2,28 +2,28 @@
 
 #include <format>
 #include <iostream>
+#include <memory>
 #include <utility>
 
 #include "DefaultPlayer.h"
 #include "input.h"
 
 tone::ui::MainInputProcessor::MainInputProcessor(
-    DeviceFacade *deviceFacade, ToneLogger *toneLogger
+    DeviceFacade *deviceFacade,
+    std::shared_ptr<ToneLogger>& toneLogger
 ) : logger(toneLogger),
     deviceFacade(deviceFacade) {
 }
 
 
 void tone::ui::MainInputProcessor::process(std::string input) const {
-    this->logger->log(std::format("Received input: {}", input));
+    this->logger->log(std::format("MainInputProcessor - received input: {}", input));
     auto parsedInput = parseInput(std::move(input));
     if (parsedInput.empty()) return;
     if (parsedInput[0] == InputCommands::PLAY) {
         if (parsedInput.size() < 2) return;
         auto *player = new DefaultPlayer(
-            {
-                .file = parsedInput[1]
-            },
+            parsedInput[1],
             logger
         );
         auto playerId = deviceFacade->addPlayer(player);
