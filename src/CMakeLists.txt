@@ -1,7 +1,7 @@
 add_library(
         tone_lib
         Recorder.h
-        DefaultRecorder.h DefaultRecorder.cpp
+        #DefaultRecorder.h DefaultRecorder.cpp
         Player.h Player.cpp
         DefaultPlayer.h DefaultPlayer.cpp
         DeviceState.h
@@ -10,6 +10,7 @@ add_library(
         ui/Screen.h
         ui/MainScreen.h ui/MainScreen.cpp
         ui/EditorScreen.h ui/EditorScreen.cpp
+        ui/PlayerFragment.h ui/PlayerFragment.cpp
         ui/MainInputProcessor.h ui/MainInputProcessor.cpp
         ui/input.h ui/input.cpp
 )

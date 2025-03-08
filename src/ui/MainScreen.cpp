@@ -1,11 +1,12 @@
 #include "MainScreen.h"
 
 tone::ui::MainScreen::MainScreen(
+    EditorScreen editor_screen,
     const MainInputProcessor &main_input_processor,
-    ToneLogger *toneLogger
-): logger(toneLogger),
+    std::shared_ptr<ToneLogger> toneLogger
+): editor_screen(editor_screen),
+   logger(toneLogger),
    main_input_processor(main_input_processor) {
-    editor_screen = EditorScreen();
     main_input_option = {
         .multiline = false,
         .on_enter = [&] {

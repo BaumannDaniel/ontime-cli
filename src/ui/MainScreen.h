@@ -15,7 +15,7 @@ namespace tone::ui {
     };
 
     class MainScreen : Screen {
-        ToneLogger *logger;
+        std::shared_ptr<ToneLogger> logger;
         MainInputProcessor main_input_processor;
         EditorScreen editor_screen;
         std::string main_input_value;
@@ -36,7 +36,11 @@ namespace tone::ui {
         ftxui::Component renderer;
 
     public:
-        explicit MainScreen(const MainInputProcessor &main_input_processor, ToneLogger *toneLogger);
+        explicit MainScreen(
+            EditorScreen editor_screen,
+            const MainInputProcessor &main_input_processor,
+            std::shared_ptr<ToneLogger> toneLogger
+            );
 
         void start() override;
 

@@ -26,6 +26,7 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
             parsedInput[1],
             logger
         );
+        player->init();
         auto playerId = deviceFacade->addPlayer(player);
         deviceFacade->startPlayer(playerId);
         return;

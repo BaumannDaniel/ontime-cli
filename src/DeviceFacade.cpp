@@ -24,3 +24,10 @@ void tone::DeviceFacade::pausePlayer(uint64_t playerId) {
     }
 }
 
+std::vector<tone::PlayerInfo> tone::DeviceFacade::get_players_info() {
+    auto players_info = std::vector<PlayerInfo>{};
+    for (const auto player : players) {
+        players_info.push_back(player->get_player_info());
+    }
+    return players_info;
+}
