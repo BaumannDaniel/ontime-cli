@@ -10,8 +10,8 @@
 
 tone::ui::MainInputProcessor::MainInputProcessor(
     DeviceFacade *deviceFacade,
-    std::shared_ptr<ToneLogger>& toneLogger
-) : logger(toneLogger),
+    std::shared_ptr<ToneLogger> toneLogger
+) : logger(std::move(toneLogger)),
     deviceFacade(deviceFacade) {
 }
 

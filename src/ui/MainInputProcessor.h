@@ -17,7 +17,7 @@ namespace tone::ui {
         DeviceFacade *deviceFacade;
 
     public:
-        MainInputProcessor(DeviceFacade *deviceFacade, std::shared_ptr<ToneLogger> &toneLogger);
+        MainInputProcessor(DeviceFacade *deviceFacade, std::shared_ptr<ToneLogger> toneLogger);
 
         void process(std::string input) const;
     };
