@@ -10,7 +10,6 @@
 namespace tone::ui {
     struct MainScreenTabs {
         static constexpr std::string EDITOR = "Editor";
-        static constexpr std::string DEVICES = "Devices";
         static constexpr std::string SETTINGS = "Settings";
     };
 
@@ -24,16 +23,12 @@ namespace tone::ui {
         int tab_selected = 0;
         const std::vector<std::string> tab_values{
             MainScreenTabs::EDITOR,
-            MainScreenTabs::DEVICES,
             MainScreenTabs::SETTINGS,
         };
         ftxui::Component tab_toggle;
-        ftxui::Component editor_container;
-        ftxui::Component devices_container;
         ftxui::Component settings_container;
-        ftxui::Component tab_container;
+        ftxui::Component tab_container{};
         ftxui::Component root_container;
-        ftxui::Component renderer;
 
     public:
         explicit MainScreen(
