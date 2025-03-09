@@ -10,7 +10,6 @@ tone::ui::EditorScreen::EditorScreen(
     std::shared_ptr<ToneLogger> tone_logger
 ) : logger(std::move(tone_logger)),
     device_facade(device_facade) {
-    root_container = ftxui::Container::Vertical({});
 }
 
 void tone::ui::EditorScreen::start() {
@@ -21,8 +20,9 @@ void tone::ui::EditorScreen::stop() {
 
 
 ftxui::Component tone::ui::EditorScreen::render() {
+    auto container = ftxui::Container::Vertical({});
     return Renderer(
-        root_container,
+        container,
         [&] {
             auto players_info = device_facade->get_players_info();
             ftxui::Elements players_fragments{};

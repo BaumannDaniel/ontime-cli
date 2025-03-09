@@ -29,8 +29,10 @@ void ToneLogger::log(const std::string &message) {
     // Create log entry
     std::ostringstream logEntry;
     logEntry << "[" << timestamp << "] " << message << std::endl;
+    log_mutex.lock();
     if (logFile.is_open()) {
         logFile << logEntry.str();
         logFile.flush();
     }
+    log_mutex.unlock();
 }

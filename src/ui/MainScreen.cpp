@@ -40,7 +40,7 @@ ftxui::Component tone::ui::MainScreen::render() {
     return Renderer(
         root_container,
         [&] {
-            //logger->log("rendering was called");
+            logger->log("rendering was called");
             return vbox(
                 main_input->Render(),
                 ftxui::separator(),
