@@ -5,31 +5,38 @@
 
 #include "PlayerFragment.h"
 
-tone::ui::EditorScreen::EditorScreen(
-    DeviceFacade *device_facade,
+
+namespace tone::ui {
+    class EditorScreenBase : public ftxui::ComponentBase {
+        std::shared_ptr<ToneLogger> logger;
+        std::shared_ptr<tone::DeviceFacade> device_facade;
+
+    public:
+        EditorScreenBase(std::shared_ptr<tone::DeviceFacade> device_facade, std::shared_ptr<ToneLogger> tone_logger);
+
+        ftxui::Element Render() override;
+    };
+}
+
+tone::ui::EditorScreenBase::EditorScreenBase(
+    std::shared_ptr<DeviceFacade> device_facade,
     std::shared_ptr<ToneLogger> tone_logger
 ) : logger(std::move(tone_logger)),
-    device_facade(device_facade) {
+    device_facade(std::move(device_facade)) {
 }
 
-void tone::ui::EditorScreen::start() {
+ftxui::Element tone::ui::EditorScreenBase::Render() {
+    auto players_info = device_facade->get_players_info();
+    ftxui::Elements players_fragments{};
+    for (const auto &player_info: players_info) {
+        players_fragments.push_back(PlayerFragment(player_info).render());
+    }
+    return vbox(players_fragments);
 }
 
-void tone::ui::EditorScreen::stop() {
-}
-
-
-ftxui::Component tone::ui::EditorScreen::render() {
-    auto container = ftxui::Container::Vertical({});
-    return Renderer(
-        container,
-        [&] {
-            auto players_info = device_facade->get_players_info();
-            ftxui::Elements players_fragments{};
-            for (const auto &player_info: players_info) {
-                players_fragments.push_back(PlayerFragment(player_info).render());
-            }
-            return vbox(players_fragments);
-        }
-    );
+ftxui::Component tone::ui::editor_screen(
+    std::shared_ptr<DeviceFacade> device_facade,
+    std::shared_ptr<ToneLogger> tone_logger
+) {
+    return ftxui::Make<EditorScreenBase>(device_facade, tone_logger);
 }

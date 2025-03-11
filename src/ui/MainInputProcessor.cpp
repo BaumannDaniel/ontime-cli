@@ -9,10 +9,10 @@
 #include "input.h"
 
 tone::ui::MainInputProcessor::MainInputProcessor(
-    DeviceFacade *deviceFacade,
+    std::shared_ptr<DeviceFacade> deviceFacade,
     std::shared_ptr<ToneLogger> toneLogger
 ) : logger(std::move(toneLogger)),
-    deviceFacade(deviceFacade) {
+    deviceFacade(std::move(deviceFacade)) {
 }
 
 

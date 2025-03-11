@@ -13,10 +13,11 @@ int main() {
     auto log_file = "/home/daniel/Documents/tone_cli_workspace/log.txt";
     auto logger = std::make_shared<ToneLogger>(log_file);
     logger->log("----- Started Tone CLI -----");
-    auto device_facade = tone::DeviceFacade();
-    auto main_input_processor = tone::ui::MainInputProcessor(&device_facade, logger);
-    auto editor_screen = tone::ui::EditorScreen(&device_facade, logger);
-    auto main_screen = std::make_shared<tone::ui::MainScreen>(editor_screen, main_input_processor, logger);
+    auto device_facade = std::make_shared<tone::DeviceFacade>(tone::DeviceFacade());
+    auto main_input_processor = std::make_shared<tone::ui::MainInputProcessor>(device_facade, logger);
+    auto editor_screen = tone::ui::editor_screen(device_facade, logger);
+    auto x = ftxui::Container::Horizontal({});
+    auto main_screen = tone::ui::create_main_screen(x, main_input_processor, logger);
     auto screen = ftxui::ScreenInteractive::TerminalOutput();
     std::thread update([&] {
         while (true) {
@@ -24,5 +25,5 @@ int main() {
             screen.PostEvent(ftxui::Event::Custom);
         }
     });
-    screen.Loop(main_screen->render());
+    screen.Loop(main_screen);
 }
