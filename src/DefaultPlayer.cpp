@@ -3,12 +3,13 @@
 #include <format>
 #include <stdexcept>
 #include <boost/uuid/uuid_generators.hpp>
+#include <utility>
 
 tone::DefaultPlayer::DefaultPlayer(
     std::string file_name,
     std::shared_ptr<ToneLogger> toneLogger
-) : logger(toneLogger),
-    file_name(file_name) {
+) : logger(std::move(toneLogger)),
+    file_name(std::move(file_name)) {
     this->id = boost::uuids::random_generator()();
 }
 
@@ -41,6 +42,10 @@ void tone::DefaultPlayer::init() {
         logger->log("Failed to init playback!");
         throw std::runtime_error("Failed to initialize playback device!");
     }
+    ma_uint64 pcm_length;
+    ma_decoder_get_length_in_pcm_frames(&decoder, &pcm_length);
+    u_int64_t file_length = pcm_length / decoder.outputSampleRate;
+    this->player_info = std::make_shared<DefaultPlayerInfo>(id, file_name, file_length, 1);
     logger->log("DefaultPlayer ready!");
     this->state = READY;
 }
@@ -64,9 +69,14 @@ void tone::DefaultPlayer::finish() {
     this->state = FINISHED;
 }
 
-tone::PlayerInfo tone::DefaultPlayer::get_player_info() {
-    ma_uint64 pcm_length;
-    ma_decoder_get_length_in_pcm_frames(&decoder, &pcm_length);
-    u_int64_t file_length = pcm_length / decoder.outputSampleRate;
-    return {id, file_name, file_length, 1};
+std::shared_ptr<tone::PlayerInfo> tone::DefaultPlayer::get_player_info() {
+    return player_info;
+}
+
+tone::DefaultPlayerInfo::DefaultPlayerInfo(
+    boost::uuids::uuid player_id,
+    std::string file_name,
+    uint64_t file_length,
+    uint64_t file_position
+) : PlayerInfo(player_id, file_name, file_length, file_position) {
 }

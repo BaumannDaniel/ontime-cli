@@ -13,6 +13,6 @@ namespace tone {
         void startPlayer(uint64_t playerId);
         void startAllPlayers();
         void pausePlayer(uint64_t playerId);
-        std::vector<PlayerInfo> get_players_info();
+        std::vector<std::shared_ptr<PlayerInfo>> get_players_info();
     };
 }

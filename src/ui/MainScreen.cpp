@@ -26,7 +26,9 @@ namespace tone::ui {
             std::shared_ptr<MainInputProcessor> main_input_processor,
             std::shared_ptr<ToneLogger> toneLogger
         );
+
         bool OnEvent(ftxui::Event event) override;
+
         ftxui::Element Render() override;
     };
 }
@@ -73,9 +75,6 @@ tone::ui::MainScreenBase::MainScreenBase(
 
 bool tone::ui::MainScreenBase::OnEvent(ftxui::Event event) {
     ComponentBase::OnEvent(event);
-    /*main_input->OnEvent(event);
-    tab_toggle->OnEvent(event);
-    tab_container->OnEvent(event);*/
     return true;
 }
 

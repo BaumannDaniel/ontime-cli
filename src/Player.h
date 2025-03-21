@@ -17,7 +17,7 @@ namespace tone {
 
         virtual ~Player() = default;
 
-        virtual PlayerInfo get_player_info() = 0;
+        virtual std::shared_ptr<PlayerInfo> get_player_info() = 0;
 
         virtual void init() = 0;
 
@@ -34,6 +34,7 @@ namespace tone {
         uint64_t file_length;
         uint64_t file_position;
 
+    protected:
         void set_file_name(std::string file_name);
 
         void set_file_length(uint64_t file_length);
@@ -56,6 +57,5 @@ namespace tone {
 
         uint64_t get_file_position();
 
-        friend class Player;
     };
 }

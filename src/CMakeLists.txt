@@ -10,7 +10,7 @@ add_library(
         ui/Screen.h
         ui/MainScreen.h ui/MainScreen.cpp
         ui/EditorScreen.h ui/EditorScreen.cpp
-        ui/PlayerFragment.h ui/PlayerFragment.cpp
+        ui/PlayerComponent.h ui/PlayerComponent.cpp
         ui/MainInputProcessor.h ui/MainInputProcessor.cpp
         ui/input.h ui/input.cpp
 )

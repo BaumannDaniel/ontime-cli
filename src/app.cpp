@@ -15,9 +15,8 @@ int main() {
     logger->log("----- Started Tone CLI -----");
     auto device_facade = std::make_shared<tone::DeviceFacade>(tone::DeviceFacade());
     auto main_input_processor = std::make_shared<tone::ui::MainInputProcessor>(device_facade, logger);
-    auto editor_screen = tone::ui::editor_screen(device_facade, logger);
-    auto x = ftxui::Container::Horizontal({});
-    auto main_screen = tone::ui::create_main_screen(x, main_input_processor, logger);
+    auto editor_screen = tone::ui::create_editor_screen(device_facade, logger);
+    auto main_screen = create_main_screen(editor_screen, main_input_processor, logger);
     auto screen = ftxui::ScreenInteractive::TerminalOutput();
     std::thread update([&] {
         while (true) {
