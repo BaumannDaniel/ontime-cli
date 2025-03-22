@@ -31,31 +31,31 @@ namespace tone {
     class PlayerInfo {
         boost::uuids::uuid id;
         std::string file_name;
-        uint64_t file_length;
-        uint64_t file_position;
+        uint64_t file_n_pcm_frames;
+        uint64_t file_current_pcm_frame;
+        u_int64_t sample_rate;
 
     protected:
-        void set_file_name(std::string file_name);
-
-        void set_file_length(uint64_t file_length);
-
-        void set_file_position(uint64_t file_position);
+        void set_current_pcm_frame_number(uint64_t current_frame);
 
     public:
         PlayerInfo(
             boost::uuids::uuid player_id,
             std::string file_name,
-            uint64_t file_length,
-            uint64_t file_position
+            uint64_t n_pcm_frames,
+            uint64_t current_pcm_frame,
+            u_int64_t sample_rate
         );
 
-        boost::uuids::uuid get_id();
+        boost::uuids::uuid get_id() const;
 
-        std::string get_file_name();
+        std::string get_file_name() const;
 
-        uint64_t get_file_length();
+        uint64_t get_number_of_pcm_frames() const;
 
-        uint64_t get_file_position();
+        uint64_t get_current_pcm_frame_number() const;
+
+        u_int64_t get_sample_rate() const;
 
     };
 }

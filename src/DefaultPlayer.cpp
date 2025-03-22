@@ -20,9 +20,14 @@ tone::DefaultPlayer::~DefaultPlayer() {
 }
 
 void tone::DefaultPlayer::play_callback(ma_device *pDevice, void *pOutput, const void *pInput, ma_uint32 frameCount) {
-    auto *pDecoder = static_cast<ma_decoder *>(pDevice->pUserData);
+    auto config = static_cast<CallbackConfig *>(pDevice->pUserData);
+    auto *pDecoder = config->decoder;
     if (pDecoder == nullptr) return;
     ma_decoder_read_pcm_frames(pDecoder, pOutput, frameCount, nullptr);
+    auto player_info = config->player_info;
+    ma_uint64 currentFrame;
+    ma_decoder_get_cursor_in_pcm_frames(pDecoder, &currentFrame);
+    player_info->set_current_pcm_frame_number(currentFrame);
     (void) pInput;
 }
 
@@ -37,15 +42,18 @@ void tone::DefaultPlayer::init() {
     this->deviceConfig.playback.channels = decoder.outputChannels;
     this->deviceConfig.sampleRate = decoder.outputSampleRate;
     this->deviceConfig.dataCallback = play_callback;
-    this->deviceConfig.pUserData = &decoder;
+    ma_uint64 pcm_length;
+    ma_decoder_get_length_in_pcm_frames(&decoder, &pcm_length);
+    this->player_info = std::make_shared<DefaultPlayerInfo>(id, file_name, pcm_length, 0, decoder.outputSampleRate);
+    this->callback_config = {
+        .decoder = &decoder,
+        .player_info = player_info
+    };
+    this->deviceConfig.pUserData = &callback_config;
     if (ma_device_init(nullptr, &deviceConfig, &device) != MA_SUCCESS) {
         logger->log("Failed to init playback!");
         throw std::runtime_error("Failed to initialize playback device!");
     }
-    ma_uint64 pcm_length;
-    ma_decoder_get_length_in_pcm_frames(&decoder, &pcm_length);
-    u_int64_t file_length = pcm_length / decoder.outputSampleRate;
-    this->player_info = std::make_shared<DefaultPlayerInfo>(id, file_name, file_length, 1);
     logger->log("DefaultPlayer ready!");
     this->state = READY;
 }
@@ -76,7 +84,8 @@ std::shared_ptr<tone::PlayerInfo> tone::DefaultPlayer::get_player_info() {
 tone::DefaultPlayerInfo::DefaultPlayerInfo(
     boost::uuids::uuid player_id,
     std::string file_name,
-    uint64_t file_length,
-    uint64_t file_position
-) : PlayerInfo(player_id, file_name, file_length, file_position) {
+    uint64_t number_of_pcm_frames,
+    uint64_t current_pcm_frame,
+    u_int64_t sample_rate
+) : PlayerInfo(player_id, std::move(file_name), number_of_pcm_frames, current_pcm_frame, sample_rate) {
 }
