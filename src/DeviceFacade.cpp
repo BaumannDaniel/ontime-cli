@@ -1,33 +1,31 @@
 #include "DeviceFacade.h"
 
-uint64_t tone::DeviceFacade::addPlayer(Player* player) {
-    players.insert(players.end(), player);
-    return players.size();
+void tone::DeviceFacade::addPlayer(std::shared_ptr<Player> player) {
+    auto player_id = player->get_player_info()->get_id();
+    player->init();
+    players.insert(
+        {
+            player_id,
+            std::move(player)
+        });
 }
 
-void tone::DeviceFacade::startPlayer(uint64_t playerId) {
-    if (players.size() <= playerId) {
-        players[playerId - 1]->play();
+void tone::DeviceFacade::startPlayer(boost::uuids::uuid playerId) const {
+    if (players.contains(playerId)) {
+        players.at(playerId)->play();
     }
 }
 
-
-void tone::DeviceFacade::startAllPlayers() {
-    for (const auto player : players) {
-        player->play();
+void tone::DeviceFacade::pausePlayer(boost::uuids::uuid playerId) const {
+    if (players.contains(playerId)) {
+        players.at(playerId)->pause();
     }
 }
 
-void tone::DeviceFacade::pausePlayer(uint64_t playerId) {
-    if (players.size() <= playerId) {
-        players[playerId - 1]->pause();
-    }
-}
-
-std::vector<std::shared_ptr<tone::PlayerInfo>> tone::DeviceFacade::get_players_info() {
-    auto players_info = std::vector<std::shared_ptr<PlayerInfo>>{};
-    for (const auto player : players) {
-        players_info.push_back(player->get_player_info());
+std::vector<std::shared_ptr<tone::PlayerInfo> > tone::DeviceFacade::get_players_info() const {
+    auto players_info = std::vector<std::shared_ptr<PlayerInfo> >{};
+    for (const auto &player_pair: players) {
+        players_info.push_back(player_pair.second->get_player_info());
     }
     return players_info;
 }

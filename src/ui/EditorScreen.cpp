@@ -36,7 +36,7 @@ ftxui::Element tone::ui::EditorScreenBase::Render() {
         player_components.insert({player_id, player_component});
     }
     std::vector<ftxui::Element> player_elements;
-    for (auto player : player_components) {
+    for (auto player: player_components) {
         player_elements.push_back(player.second->Render());
     }
     return ftxui::vbox(player_elements);

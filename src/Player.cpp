@@ -23,6 +23,14 @@ void tone::PlayerInfo::set_current_pcm_frame_number(uint64_t current_frame) {
     this->file_current_pcm_frame = current_frame;
 }
 
+void tone::PlayerInfo::set_frame_count(uint64_t frame_count) {
+    this->file_n_pcm_frames = frame_count;
+}
+
+void tone::PlayerInfo::set_sample_rate(uint64_t sample_rate) {
+    this->sample_rate = sample_rate;
+}
+
 boost::uuids::uuid tone::PlayerInfo::get_id() const {
     return this->id;
 }

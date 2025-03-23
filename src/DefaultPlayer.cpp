@@ -11,6 +11,12 @@ tone::DefaultPlayer::DefaultPlayer(
 ) : logger(std::move(toneLogger)),
     file_name(std::move(file_name)) {
     this->id = boost::uuids::random_generator()();
+    this->player_info = std::make_shared<DefaultPlayerInfo>(
+        id,
+        this->file_name,
+        0,
+        0,
+        0);
 }
 
 tone::DefaultPlayer::~DefaultPlayer() {
@@ -44,7 +50,8 @@ void tone::DefaultPlayer::init() {
     this->deviceConfig.dataCallback = play_callback;
     ma_uint64 pcm_length;
     ma_decoder_get_length_in_pcm_frames(&decoder, &pcm_length);
-    this->player_info = std::make_shared<DefaultPlayerInfo>(id, file_name, pcm_length, 0, decoder.outputSampleRate);
+    this->player_info->set_frame_count(pcm_length);
+    this->player_info->set_sample_rate(decoder.outputSampleRate);
     this->callback_config = {
         .decoder = &decoder,
         .player_info = player_info

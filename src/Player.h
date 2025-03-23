@@ -36,7 +36,9 @@ namespace tone {
         u_int64_t sample_rate;
 
     protected:
+        void set_frame_count(uint64_t frame_count);
         void set_current_pcm_frame_number(uint64_t current_frame);
+        void set_sample_rate(uint64_t sample_rate);
 
     public:
         PlayerInfo(

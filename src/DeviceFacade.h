@@ -1,18 +1,21 @@
 #pragma once
 #include <cstdint>
+#include <map>
 #include <vector>
 
 #include "Player.h"
 
 namespace tone {
     class DeviceFacade {
-        std::vector<Player *> players{};
+        std::map<boost::uuids::uuid, std::shared_ptr<Player> > players{};
 
     public:
-        uint64_t addPlayer(Player *player);
-        void startPlayer(uint64_t playerId);
-        void startAllPlayers();
-        void pausePlayer(uint64_t playerId);
-        std::vector<std::shared_ptr<PlayerInfo>> get_players_info();
+        void addPlayer(std::shared_ptr<Player> player);
+
+        void startPlayer(boost::uuids::uuid playerId) const;
+
+        void pausePlayer(boost::uuids::uuid playerId) const;
+
+        std::vector<std::shared_ptr<PlayerInfo> > get_players_info() const;
     };
 }
