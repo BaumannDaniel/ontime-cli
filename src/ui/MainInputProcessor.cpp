@@ -10,7 +10,7 @@
 
 tone::ui::MainInputProcessor::MainInputProcessor(
     std::shared_ptr<DeviceFacade> deviceFacade,
-    std::shared_ptr<DeviceIdMapper> device_id_mapper,
+    std::shared_ptr<DeviceIdManager> device_id_mapper,
     std::shared_ptr<ToneLogger> toneLogger
 ) : logger(std::move(toneLogger)),
     deviceFacade(std::move(deviceFacade)),

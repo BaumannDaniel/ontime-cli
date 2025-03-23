@@ -5,6 +5,7 @@
 
 namespace tone::ui {
     ftxui::Component create_player_component(
+        std::string ui_id,
         std::shared_ptr<PlayerInfo> player_info
     );
 }

@@ -3,7 +3,7 @@
 #include <string>
 
 #include "DeviceFacade.h"
-#include "DeviceIdMapper.h"
+#include "DeviceIdManager.h"
 #include "logging.h"
 
 namespace tone::ui {
@@ -22,14 +22,14 @@ namespace tone::ui {
     class MainInputProcessor {
         std::shared_ptr<ToneLogger> logger;
         std::shared_ptr<DeviceFacade> deviceFacade;
-        std::shared_ptr<DeviceIdMapper> device_id_mapper;
+        std::shared_ptr<DeviceIdManager> device_id_mapper;
 
         boost::uuids::uuid add_player(std::string file_name) const;
 
     public:
         MainInputProcessor(
             std::shared_ptr<DeviceFacade> deviceFacade,
-            std::shared_ptr<DeviceIdMapper> device_id_mapper,
+            std::shared_ptr<DeviceIdManager> device_id_mapper,
             std::shared_ptr<ToneLogger> toneLogger
         );
 

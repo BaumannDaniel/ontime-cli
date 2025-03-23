@@ -13,7 +13,7 @@ add_library(
         ui/PlayerComponent.h ui/PlayerComponent.cpp
         ui/MainInputProcessor.h ui/MainInputProcessor.cpp
         ui/input.h ui/input.cpp
-        ui/DeviceIdMapper.h ui/DeviceMapper.cpp
+        ui/DeviceIdManager.h ui/DeviceIdManager.cpp
 )
 target_link_libraries(
         tone_lib
