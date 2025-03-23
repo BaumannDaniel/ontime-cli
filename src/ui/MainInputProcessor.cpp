@@ -10,9 +10,11 @@
 
 tone::ui::MainInputProcessor::MainInputProcessor(
     std::shared_ptr<DeviceFacade> deviceFacade,
+    std::shared_ptr<DeviceIdMapper> device_id_mapper,
     std::shared_ptr<ToneLogger> toneLogger
 ) : logger(std::move(toneLogger)),
-    deviceFacade(std::move(deviceFacade)) {
+    deviceFacade(std::move(deviceFacade)),
+    device_id_mapper(std::move(device_id_mapper)) {
 }
 
 
@@ -50,4 +52,3 @@ boost::uuids::uuid tone::ui::MainInputProcessor::add_player(std::string file_nam
     deviceFacade->addPlayer(player);
     return player->get_player_info()->get_id();
 }
-
