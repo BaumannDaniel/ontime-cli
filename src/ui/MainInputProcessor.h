@@ -9,6 +9,7 @@
 namespace tone::ui {
     struct InputCommands {
         static constexpr std::string ADD = "add";
+        static constexpr std::string REMOVE = "remove";
         static constexpr std::string PLAY = "play";
         static constexpr std::string START = "start";
         static constexpr std::string STOP = "stop";

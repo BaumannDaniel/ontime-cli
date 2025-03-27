@@ -12,6 +12,8 @@ namespace tone {
     public:
         void addPlayer(std::shared_ptr<Player> player);
 
+        void removePlayer(boost::uuids::uuid player_id);
+
         void startPlayer(boost::uuids::uuid playerId) const;
 
         void pausePlayer(boost::uuids::uuid playerId) const;

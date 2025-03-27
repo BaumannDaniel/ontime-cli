@@ -10,6 +10,14 @@ void tone::DeviceFacade::addPlayer(std::shared_ptr<Player> player) {
         });
 }
 
+void tone::DeviceFacade::removePlayer(boost::uuids::uuid player_id) {
+    if (players.contains(player_id)) {
+        players.at(player_id)->finish();
+        players.erase(player_id);
+    }
+}
+
+
 void tone::DeviceFacade::startPlayer(boost::uuids::uuid playerId) const {
     if (players.contains(playerId)) {
         players.at(playerId)->play();

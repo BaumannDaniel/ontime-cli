@@ -20,6 +20,8 @@ namespace tone::ui {
 
         void add_id_mapping(std::string ui_id, boost::uuids::uuid device_id, DeviceType device_type);
 
+        void remove_id_mapping_by_device_id(boost::uuids::uuid device_id);
+
         boost::uuids::uuid get_device_id(std::string ui_id);
 
         std::string get_ui_id(boost::uuids::uuid device_id);

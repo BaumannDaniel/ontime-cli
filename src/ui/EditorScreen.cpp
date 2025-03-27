@@ -37,16 +37,24 @@ tone::ui::EditorScreenBase::EditorScreenBase(
 
 ftxui::Element tone::ui::EditorScreenBase::Render() {
     auto players_info = device_facade->get_players_info();
+    std::set<boost::uuids::uuid> current_player_ids;
     for (const auto &player_info: players_info) {
         auto player_id = player_info->get_id();
+        current_player_ids.insert(player_id);
         if (player_components.contains(player_id)) continue;
         auto player_ui_id = device_id_mapper->get_available_ui_id();
         auto player_component = create_player_component(player_ui_id, player_info);
         player_components.insert({player_id, player_component});
         device_id_mapper->add_id_mapping(player_ui_id, player_id, PLAYER);
     }
+    for (const auto& player : player_components) {
+        if (!current_player_ids.contains(player.first)) {
+            player_components.erase(player.first);
+            device_id_mapper->remove_id_mapping_by_device_id(player.first);
+        }
+    }
     std::vector<ftxui::Element> player_elements;
-    for (auto player: player_components) {
+    for (const auto& player: player_components) {
         player_elements.push_back(player.second->Render());
     }
     return vbox(player_elements);
