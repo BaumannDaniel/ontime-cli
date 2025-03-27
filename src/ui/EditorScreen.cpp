@@ -43,6 +43,7 @@ ftxui::Element tone::ui::EditorScreenBase::Render() {
         auto player_ui_id = device_id_mapper->get_available_ui_id();
         auto player_component = create_player_component(player_ui_id, player_info);
         player_components.insert({player_id, player_component});
+        device_id_mapper->add_id_mapping(player_ui_id, player_id, PLAYER);
     }
     std::vector<ftxui::Element> player_elements;
     for (auto player: player_components) {

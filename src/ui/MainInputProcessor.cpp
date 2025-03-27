@@ -35,16 +35,22 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
         deviceFacade->startPlayer(player_id);
         return;
     }
-    /*if (parsedInput[0] == InputCommands::START) {
+    if (parsedInput[0] == InputCommands::START) {
         if (parsedInput.size() < 2) return;
-        uint64_t playerId = stoi(parsedInput[1]);
-        deviceFacade->startPlayer(playerId);
+        const std::string& device_ui_id = parsedInput[1];
+        DeviceType device_type = device_id_mapper->get_device_type_by_ui_id(device_ui_id);
+        if (device_type != PLAYER) return;
+        boost::uuids::uuid device_id = device_id_mapper->get_device_id(device_ui_id);
+        deviceFacade->startPlayer(device_id);
     }
     if (parsedInput[0] == InputCommands::STOP) {
         if (parsedInput.size() < 2) return;
-        uint64_t playerId = stoi(parsedInput[1]);
-        deviceFacade->pausePlayer(playerId);
-    }*/
+        const std::string& device_ui_id = parsedInput[1];
+        DeviceType device_type = device_id_mapper->get_device_type_by_ui_id(device_ui_id);
+        if (device_type != PLAYER) return;
+        boost::uuids::uuid device_id = device_id_mapper->get_device_id(device_ui_id);
+        deviceFacade->pausePlayer(device_id);
+    }
 }
 
 boost::uuids::uuid tone::ui::MainInputProcessor::add_player(std::string file_name) const {
