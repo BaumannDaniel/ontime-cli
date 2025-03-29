@@ -7,7 +7,6 @@ add_library(
         DeviceState.h
         DeviceFacade.h DeviceFacade.cpp
         logging.h logging.cpp
-        ui/Screen.h
         ui/MainScreen.h ui/MainScreen.cpp
         ui/EditorScreen.h ui/EditorScreen.cpp
         ui/PlayerComponent.h ui/PlayerComponent.cpp

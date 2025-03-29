@@ -3,9 +3,7 @@
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/component/component_options.hpp>
 
-#include "EditorScreen.h"
 #include "MainInputProcessor.h"
-#include "Screen.h"
 
 namespace tone::ui {
     struct MainScreenTabs {
