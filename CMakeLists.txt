@@ -5,6 +5,7 @@ set(CMAKE_CXX_STANDARD 20)
 find_path(MINIAUDIO_INCLUDE_DIRS "miniaudio.h")
 find_package(ftxui REQUIRED)
 find_package(Boost REQUIRED COMPONENTS uuid)
+find_package(Boost REQUIRED COMPONENTS algorithm)
 find_package(rxcpp CONFIG REQUIRED)
 find_package(GTest REQUIRED)
 

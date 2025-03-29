@@ -14,10 +14,12 @@ add_library(
         ui/MainInputProcessor.h ui/MainInputProcessor.cpp
         ui/input.h ui/input.cpp
         ui/DeviceIdManager.h ui/DeviceIdManager.cpp
+        ui/formatting.h ui/formatting.cpp
 )
 target_link_libraries(
         tone_lib
         PRIVATE Boost::uuid
+        PRIVATE Boost::algorithm
 )
 target_include_directories(
         tone_lib

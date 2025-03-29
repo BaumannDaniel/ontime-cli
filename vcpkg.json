@@ -5,6 +5,7 @@
     "ftxui",
     "miniaudio",
     "boost-uuid",
+    "boost-algorithm",
     "rxcpp",
     "gtest"
   ]
