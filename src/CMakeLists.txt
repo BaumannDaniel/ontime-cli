@@ -1,12 +1,12 @@
 add_library(
         tone_lib
-        Recorder.h
+        domain/Recorder.h
         #DefaultRecorder.h DefaultRecorder.cpp
-        Player.h Player.cpp
-        DefaultPlayer.h DefaultPlayer.cpp
-        DeviceState.h
-        DeviceFacade.h DeviceFacade.cpp
-        logging.h logging.cpp
+        domain/Player.h domain/Player.cpp
+        domain/DefaultPlayer.h domain/DefaultPlayer.cpp
+        domain/DeviceState.h
+        domain/DeviceFacade.h domain/DeviceFacade.cpp
+        domain/logging.h domain/logging.cpp
         ui/MainScreen.h ui/MainScreen.cpp
         ui/EditorScreen.h ui/EditorScreen.cpp
         ui/PlayerComponent.h ui/PlayerComponent.cpp

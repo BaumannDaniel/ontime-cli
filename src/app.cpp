@@ -1,14 +1,13 @@
+#define MINIAUDIO_IMPLEMENTATION
+
 #include <cstdlib>
 #include <iostream>
-
-#define MINIAUDIO_IMPLEMENTATION
 #include <miniaudio.h>
+#include "ftxui/component/component.hpp"
+#include "ftxui/component/screen_interactive.hpp"
 
 #include "DeviceIdManager.h"
-#include "ftxui/component/component.hpp"       // for Toggle, Renderer, Vertical
-#include "ftxui/component/screen_interactive.hpp"  // for Component, ScreenInteractive
-
-#include "logging.h"
+#include "EditorScreen.h"
 #include "ui/MainScreen.h"
 
 int main() {

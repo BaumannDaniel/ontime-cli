@@ -2,9 +2,9 @@
 #include <memory>
 #include <string>
 
-#include "DeviceFacade.h"
+#include "domain/DeviceFacade.h"
 #include "DeviceIdManager.h"
-#include "logging.h"
+#include "domain/logging.h"
 
 namespace tone::ui {
     struct InputCommands {
