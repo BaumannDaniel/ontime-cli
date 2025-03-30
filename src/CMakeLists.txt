@@ -1,9 +1,7 @@
 add_library(
         tone_lib
-        domain/Recorder.h
         #DefaultRecorder.h DefaultRecorder.cpp
         domain/Player.h domain/Player.cpp
-        domain/DefaultPlayer.h domain/DefaultPlayer.cpp
         domain/DeviceState.h
         domain/DeviceFacade.h domain/DeviceFacade.cpp
         domain/logging.h domain/logging.cpp

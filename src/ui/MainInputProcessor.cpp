@@ -4,7 +4,7 @@
 #include <memory>
 #include <utility>
 
-#include "domain/DefaultPlayer.h"
+#include "domain/Player.h"
 #include "input.h"
 
 tone::ui::MainInputProcessor::MainInputProcessor(
@@ -61,7 +61,7 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
 }
 
 boost::uuids::uuid tone::ui::MainInputProcessor::add_player(std::string file_name) const {
-    auto player = std::make_shared<DefaultPlayer>(file_name, logger);
+    auto player = std::make_shared<Player>(file_name, logger);
     deviceFacade->addPlayer(player);
     return player->get_player_info()->get_id();
 }
