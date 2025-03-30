@@ -9,10 +9,6 @@
 #include "Player.h"
 
 namespace tone {
-    struct PlayerConfig {
-        std::string file;
-    };
-
     class PlayerInfo;
 
     struct CallbackConfig {
