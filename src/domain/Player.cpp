@@ -7,8 +7,8 @@
 
 tone::Player::Player(
     std::string file_name,
-    std::shared_ptr<ToneLogger> toneLogger
-) : logger(std::move(toneLogger)),
+    std::shared_ptr<ToneLogger> tone_logger
+) : logger(std::move(tone_logger)),
     file_name(std::move(file_name)) {
     this->id = boost::uuids::random_generator()();
     this->player_info = std::make_shared<PlayerInfo>(
@@ -20,21 +20,21 @@ tone::Player::Player(
 }
 
 tone::Player::~Player() {
-    if (this->state != UNINIT) {
-        this->uninit();
+    if (this->state != UN_INIT) {
+        this->un_init();
     }
 }
 
-void tone::Player::play_callback(ma_device *pDevice, void *pOutput, const void *pInput, ma_uint32 frameCount) {
-    auto config = static_cast<CallbackConfig *>(pDevice->pUserData);
+void tone::Player::play_callback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count) {
+    auto config = static_cast<CallbackConfig *>(p_device->pUserData);
     auto *pDecoder = config->decoder;
     if (pDecoder == nullptr) return;
-    ma_decoder_read_pcm_frames(pDecoder, pOutput, frameCount, nullptr);
+    ma_decoder_read_pcm_frames(pDecoder, p_output, frame_count, nullptr);
     auto player_info = config->player_info;
     ma_uint64 currentFrame;
     ma_decoder_get_cursor_in_pcm_frames(pDecoder, &currentFrame);
     player_info->set_current_pcm_frame_number(currentFrame);
-    (void) pInput;
+    (void) p_input;
 }
 
 
@@ -43,11 +43,11 @@ void tone::Player::init() {
         logger->log(std::format("Failed to init decoder for file: {}", file_name));
         throw std::runtime_error("Failed to initialize file decoder!");
     }
-    this->deviceConfig = ma_device_config_init(ma_device_type_playback);
-    this->deviceConfig.playback.format = decoder.outputFormat;
-    this->deviceConfig.playback.channels = decoder.outputChannels;
-    this->deviceConfig.sampleRate = decoder.outputSampleRate;
-    this->deviceConfig.dataCallback = play_callback;
+    this->device_config = ma_device_config_init(ma_device_type_playback);
+    this->device_config.playback.format = decoder.outputFormat;
+    this->device_config.playback.channels = decoder.outputChannels;
+    this->device_config.sampleRate = decoder.outputSampleRate;
+    this->device_config.dataCallback = play_callback;
     ma_uint64 pcm_length;
     ma_decoder_get_length_in_pcm_frames(&decoder, &pcm_length);
     this->player_info->set_frame_count(pcm_length);
@@ -56,8 +56,8 @@ void tone::Player::init() {
         .decoder = &decoder,
         .player_info = player_info
     };
-    this->deviceConfig.pUserData = &callback_config;
-    if (ma_device_init(nullptr, &deviceConfig, &device) != MA_SUCCESS) {
+    this->device_config.pUserData = &callback_config;
+    if (ma_device_init(nullptr, &device_config, &device) != MA_SUCCESS) {
         logger->log("Failed to init playback!");
         throw std::runtime_error("Failed to initialize playback device!");
     }
@@ -78,13 +78,13 @@ void tone::Player::stop() {
     this->state = STOPPED;
 }
 
-void tone::Player::uninit() {
+void tone::Player::un_init() {
     ma_device_uninit(&device);
     ma_decoder_uninit(&decoder);
-    this->state = UNINIT;
+    this->state = UN_INIT;
 }
 
-tone::DeviceState tone::Player::getDeviceState() const {
+tone::DeviceState tone::Player::get_device_state() const {
     return this->state;
 }
 

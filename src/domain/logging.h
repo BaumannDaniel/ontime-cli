@@ -5,7 +5,7 @@
 
 class ToneLogger {
     std::mutex log_mutex;
-    std::ofstream logFile;
+    std::ofstream log_file;
 public:
     explicit ToneLogger(const std::string& filename);
     ~ToneLogger();

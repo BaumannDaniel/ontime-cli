@@ -2,7 +2,7 @@
 
 namespace tone {
     enum DeviceState {
-        UNINIT,
+        UN_INIT,
         FAILED,
         INIT,
         FINISHED,

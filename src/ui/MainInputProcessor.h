@@ -22,16 +22,16 @@ namespace tone::ui {
 
     class MainInputProcessor {
         std::shared_ptr<ToneLogger> logger;
-        std::shared_ptr<DeviceFacade> deviceFacade;
+        std::shared_ptr<DeviceFacade> device_facade;
         std::shared_ptr<DeviceIdManager> device_id_mapper;
 
         boost::uuids::uuid add_player(std::string file_name) const;
 
     public:
         MainInputProcessor(
-            std::shared_ptr<DeviceFacade> deviceFacade,
+            std::shared_ptr<DeviceFacade> device_facade,
             std::shared_ptr<DeviceIdManager> device_id_mapper,
-            std::shared_ptr<ToneLogger> toneLogger
+            std::shared_ptr<ToneLogger> tone_logger
         );
 
         void process(std::string input) const;

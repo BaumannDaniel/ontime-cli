@@ -9,13 +9,13 @@ namespace tone {
         std::map<boost::uuids::uuid, std::shared_ptr<Player> > players{};
 
     public:
-        void addPlayer(std::shared_ptr<Player> player);
+        void add_player(std::shared_ptr<Player> player);
 
-        void removePlayer(boost::uuids::uuid player_id);
+        void remove_player(boost::uuids::uuid player_id);
 
-        void startPlayer(boost::uuids::uuid playerId) const;
+        void start_player(boost::uuids::uuid player_id) const;
 
-        void stopPlayer(boost::uuids::uuid playerId) const;
+        void stop_player(boost::uuids::uuid player_id) const;
 
         std::vector<std::shared_ptr<PlayerInfo> > get_players_info() const;
     };

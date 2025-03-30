@@ -22,22 +22,22 @@ namespace tone {
 
     class Player {
         boost::uuids::uuid id;
-        DeviceState state = UNINIT;
+        DeviceState state = UN_INIT;
         std::shared_ptr<ToneLogger> logger = nullptr;
         std::string file_name;
         ma_device device{};
-        ma_device_config deviceConfig{};
-        ma_decoder_config decoderConfig{};
+        ma_device_config device_config{};
+        ma_decoder_config decoder_config{};
         ma_decoder decoder{};
         std::shared_ptr<PlayerInfo> player_info = nullptr;
         CallbackConfig callback_config;
 
-        static void play_callback(ma_device *pDevice, void *pOutput, const void *pInput, ma_uint32 frameCount);
+        static void play_callback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count);
 
     public:
         Player(
             std::string file_name,
-            std::shared_ptr<ToneLogger> toneLogger
+            std::shared_ptr<ToneLogger> tone_logger
         );
 
         ~Player();
@@ -48,9 +48,9 @@ namespace tone {
 
         void stop();
 
-        void uninit();
+        void un_init();
 
-        DeviceState getDeviceState() const;
+        DeviceState get_device_state() const;
 
         std::shared_ptr<PlayerInfo> get_player_info();
     };

@@ -2,7 +2,7 @@
 
 #include "input.h"
 
-std::string tone::ui::trimWhitespace(std::string str) {
+std::string tone::ui::trim_whitespace(std::string str) {
     const auto str_begin = str.find_first_not_of(WHITESPACE);
     if (str_begin == std::string::npos) return {};
     const auto str_end = str.find_last_not_of(WHITESPACE);
@@ -14,8 +14,8 @@ std::string tone::ui::trimWhitespace(std::string str) {
     return str;
 }
 
-std::vector<std::string> tone::ui::parseInput(std::string input) {
-    input = trimWhitespace(input);
+std::vector<std::string> tone::ui::parse_input(std::string input) {
+    input = trim_whitespace(input);
     std::vector<std::string> segments = {};
     if (input.empty()) return segments;
     u_int32_t i = 0;

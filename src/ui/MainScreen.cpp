@@ -24,7 +24,7 @@ namespace tone::ui {
         MainScreenBase(
             ftxui::Component editor_screen,
             std::shared_ptr<MainInputProcessor> main_input_processor,
-            std::shared_ptr<ToneLogger> toneLogger
+            std::shared_ptr<ToneLogger> tone_logger
         );
 
         bool OnEvent(ftxui::Event event) override;
@@ -36,8 +36,8 @@ namespace tone::ui {
 tone::ui::MainScreenBase::MainScreenBase(
     ftxui::Component editor_screen,
     std::shared_ptr<MainInputProcessor> main_input_processor,
-    std::shared_ptr<ToneLogger> toneLogger
-) : logger(std::move(toneLogger)),
+    std::shared_ptr<ToneLogger> tone_logger
+) : logger(std::move(tone_logger)),
     main_input_processor(main_input_processor),
     editor_screen(editor_screen) {
     main_input_option = {
@@ -92,7 +92,7 @@ ftxui::Element tone::ui::MainScreenBase::Render() {
 ftxui::Component tone::ui::create_main_screen(
     ftxui::Component editor_screen,
     std::shared_ptr<MainInputProcessor> main_input_processor,
-    std::shared_ptr<ToneLogger> toneLogger
+    std::shared_ptr<ToneLogger> tone_logger
 ) {
-    return ftxui::Make<MainScreenBase>(editor_screen, main_input_processor, toneLogger);
+    return ftxui::Make<MainScreenBase>(editor_screen, main_input_processor, tone_logger);
 }

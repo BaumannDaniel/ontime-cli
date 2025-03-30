@@ -1,6 +1,6 @@
 #include "DeviceFacade.h"
 
-void tone::DeviceFacade::addPlayer(std::shared_ptr<Player> player) {
+void tone::DeviceFacade::add_player(std::shared_ptr<Player> player) {
     auto player_id = player->get_player_info()->get_id();
     player->init();
     players.insert(
@@ -10,21 +10,21 @@ void tone::DeviceFacade::addPlayer(std::shared_ptr<Player> player) {
         });
 }
 
-void tone::DeviceFacade::removePlayer(boost::uuids::uuid player_id) {
+void tone::DeviceFacade::remove_player(boost::uuids::uuid player_id) {
     if (players.contains(player_id)) {
-        players.at(player_id)->uninit();
+        players.at(player_id)->un_init();
         players.erase(player_id);
     }
 }
 
 
-void tone::DeviceFacade::startPlayer(boost::uuids::uuid playerId) const {
+void tone::DeviceFacade::start_player(boost::uuids::uuid playerId) const {
     if (players.contains(playerId)) {
         players.at(playerId)->start();
     }
 }
 
-void tone::DeviceFacade::stopPlayer(boost::uuids::uuid playerId) const {
+void tone::DeviceFacade::stop_player(boost::uuids::uuid playerId) const {
     if (players.contains(playerId)) {
         players.at(playerId)->stop();
     }
