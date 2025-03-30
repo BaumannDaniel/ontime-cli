@@ -44,11 +44,11 @@ namespace tone {
 
         void init();
 
-        void play();
+        void start();
 
-        void pause();
+        void stop();
 
-        void finish();
+        void uninit();
 
         DeviceState getDeviceState() const;
 

@@ -15,7 +15,7 @@ namespace tone {
 
         void startPlayer(boost::uuids::uuid playerId) const;
 
-        void pausePlayer(boost::uuids::uuid playerId) const;
+        void stopPlayer(boost::uuids::uuid playerId) const;
 
         std::vector<std::shared_ptr<PlayerInfo> > get_players_info() const;
     };

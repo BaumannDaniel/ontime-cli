@@ -4,10 +4,10 @@ namespace tone {
     enum DeviceState {
         UNINIT,
         FAILED,
-        READY,
+        INIT,
         FINISHED,
-        PAUSED,
+        STOPPED,
         RECORDING,
-        PLAYING
+        STARTED
     };
 }

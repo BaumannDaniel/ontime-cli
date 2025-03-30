@@ -20,8 +20,8 @@ tone::Player::Player(
 }
 
 tone::Player::~Player() {
-    if (this->state != FINISHED) {
-        this->finish();
+    if (this->state != UNINIT) {
+        this->uninit();
     }
 }
 
@@ -62,26 +62,26 @@ void tone::Player::init() {
         throw std::runtime_error("Failed to initialize playback device!");
     }
     logger->log("DefaultPlayer ready!");
-    this->state = READY;
+    this->state = INIT;
 }
 
 
-void tone::Player::play() {
+void tone::Player::start() {
     ma_device_start(&device);
     logger->log("Playing!");
-    this->state = PLAYING;
+    this->state = STARTED;
     logger->log("Set state playing!");
 }
 
-void tone::Player::pause() {
+void tone::Player::stop() {
     ma_device_stop(&device);
-    this->state = PAUSED;
+    this->state = STOPPED;
 }
 
-void tone::Player::finish() {
+void tone::Player::uninit() {
     ma_device_uninit(&device);
     ma_decoder_uninit(&decoder);
-    this->state = FINISHED;
+    this->state = UNINIT;
 }
 
 tone::DeviceState tone::Player::getDeviceState() const {

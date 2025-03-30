@@ -12,7 +12,7 @@ void tone::DeviceFacade::addPlayer(std::shared_ptr<Player> player) {
 
 void tone::DeviceFacade::removePlayer(boost::uuids::uuid player_id) {
     if (players.contains(player_id)) {
-        players.at(player_id)->finish();
+        players.at(player_id)->uninit();
         players.erase(player_id);
     }
 }
@@ -20,13 +20,13 @@ void tone::DeviceFacade::removePlayer(boost::uuids::uuid player_id) {
 
 void tone::DeviceFacade::startPlayer(boost::uuids::uuid playerId) const {
     if (players.contains(playerId)) {
-        players.at(playerId)->play();
+        players.at(playerId)->start();
     }
 }
 
-void tone::DeviceFacade::pausePlayer(boost::uuids::uuid playerId) const {
+void tone::DeviceFacade::stopPlayer(boost::uuids::uuid playerId) const {
     if (players.contains(playerId)) {
-        players.at(playerId)->pause();
+        players.at(playerId)->stop();
     }
 }
 
