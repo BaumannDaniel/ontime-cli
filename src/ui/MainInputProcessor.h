@@ -2,9 +2,11 @@
 #include <memory>
 #include <string>
 
-#include "domain/DeviceFacade.h"
+#include "DeviceFacade.h"
 #include "DeviceIdManager.h"
-#include "domain/logging.h"
+#include "logging.h"
+
+class ToneLogger;
 
 namespace tone::ui {
     struct InputCommands {

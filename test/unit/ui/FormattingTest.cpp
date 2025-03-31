@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 
 #include "formatting.h"
-#include "input.h"
 
 TEST(seconds_to_display_format, formats_single_digit_seconds) {
     const auto result = tone::ui::seconds_to_display_format(9, false);
@@ -9,11 +8,11 @@ TEST(seconds_to_display_format, formats_single_digit_seconds) {
 }
 
 TEST(seconds_to_display_format, formats_single_digit_minutes) {
-    const auto result = tone::ui::seconds_to_display_format(60, false);
-    ASSERT_EQ("01:00", result);
+    const auto result = tone::ui::seconds_to_display_format(72, false);
+    ASSERT_EQ("01:12", result);
 }
 
 TEST(seconds_to_display_format, formats_single_digit_hours) {
-    const auto result = tone::ui::seconds_to_display_format(60 * 60, true);
-    ASSERT_EQ("01:00:00", result);
+    const auto result = tone::ui::seconds_to_display_format(60 * 72, true);
+    ASSERT_EQ("01:12:00", result);
 }

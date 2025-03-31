@@ -1,6 +1,5 @@
 #define MINIAUDIO_IMPLEMENTATION
 
-#include <miniaudio.h>
 #include "ftxui/component/component.hpp"
 #include "ftxui/component/screen_interactive.hpp"
 

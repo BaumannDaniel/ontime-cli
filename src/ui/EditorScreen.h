@@ -1,9 +1,9 @@
 #pragma once
 #include <ftxui/component/component_base.hpp>
 
-#include "domain/DeviceFacade.h"
+#include "DeviceFacade.h"
 #include "DeviceIdManager.h"
-#include "domain/logging.h"
+#include "logging.h"
 
 namespace tone::ui {
     ftxui::Component create_editor_screen(

@@ -1,11 +1,11 @@
 add_executable(
-        tone_unit_tests
+        tone_ui_unit_tests
         ui/InputTest.cpp
         ui/FormattingTest.cpp
 )
 target_link_libraries(
-        tone_unit_tests
+        tone_ui_unit_tests
+        PRIVATE tone_ui_lib
         PRIVATE GTest::gtest_main
-        PRIVATE tone_lib
 )
-gtest_discover_tests(tone_unit_tests)
+gtest_discover_tests(tone_ui_unit_tests)

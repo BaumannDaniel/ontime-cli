@@ -4,7 +4,7 @@
 #include <memory>
 #include <utility>
 
-#include "domain/Player.h"
+#include "Player.h"
 #include "input.h"
 
 tone::ui::MainInputProcessor::MainInputProcessor(
