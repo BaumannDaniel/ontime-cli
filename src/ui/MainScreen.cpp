@@ -43,11 +43,8 @@ tone::ui::MainScreenBase::MainScreenBase(
     main_input_option = {
         .multiline = false,
         .on_enter = [&] {
-            logger->log(std::format("On Enter called with: {}", main_input_value));
             this->main_input_processor->process(main_input_value);
-            logger->log("Past process");
             main_input_value.clear();
-            logger->log("Past clear");
         }
     };
     main_input = Input(&main_input_value, "Type your command here!", main_input_option);

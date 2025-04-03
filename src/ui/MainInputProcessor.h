@@ -16,6 +16,7 @@ namespace tone::ui {
         static constexpr std::string START = "start";
         static constexpr std::string STOP = "stop";
         static constexpr std::string RESET = "reset";
+        static constexpr std::string FILE = "file";
     };
 
     struct InputSubjects {

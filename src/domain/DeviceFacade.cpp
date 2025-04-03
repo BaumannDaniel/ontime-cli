@@ -1,5 +1,7 @@
 #include "DeviceFacade.h"
 
+#include <utility>
+
 void tone::DeviceFacade::add_player(std::shared_ptr<Player> player) {
     auto player_id = player->get_player_info()->get_id();
     player->init();
@@ -29,6 +31,13 @@ void tone::DeviceFacade::stop_player(boost::uuids::uuid playerId) const {
         players.at(playerId)->stop();
     }
 }
+
+void tone::DeviceFacade::change_player_file(boost::uuids::uuid player_id, std::string file_name) const {
+    if (players.contains(player_id)) {
+        players.at(player_id)->change_file(std::move(file_name));
+    }
+}
+
 
 std::vector<std::shared_ptr<tone::PlayerInfo> > tone::DeviceFacade::get_players_info() const {
     auto players_info = std::vector<std::shared_ptr<PlayerInfo> >{};

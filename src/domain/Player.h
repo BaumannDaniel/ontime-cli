@@ -17,10 +17,8 @@ namespace tone {
     };
 
     class Player {
-        boost::uuids::uuid id;
         DeviceState state = UN_INIT;
         std::shared_ptr<ToneLogger> logger = nullptr;
-        std::string file_name;
         ma_device device{};
         ma_device_config device_config{};
         ma_decoder_config decoder_config{};
@@ -46,6 +44,8 @@ namespace tone {
 
         void un_init();
 
+        void change_file(std::string file_name);
+
         DeviceState get_device_state() const;
 
         std::shared_ptr<PlayerInfo> get_player_info();
@@ -54,15 +54,9 @@ namespace tone {
     class PlayerInfo {
         boost::uuids::uuid id;
         std::string file_name;
-        uint64_t file_n_pcm_frames;
+        uint64_t frame_count;
         uint64_t file_current_pcm_frame;
         u_int64_t sample_rate;
-
-        void set_frame_count(uint64_t frame_count);
-
-        void set_current_pcm_frame_number(uint64_t current_frame);
-
-        void set_sample_rate(uint64_t sample_rate);
 
     public:
         PlayerInfo(
