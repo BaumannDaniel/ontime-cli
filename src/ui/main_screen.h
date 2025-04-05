@@ -3,7 +3,7 @@
 #include <ftxui/component/component_base.hpp>
 #include <ftxui/component/component_options.hpp>
 
-#include "MainInputProcessor.h"
+#include "main_input_processor.h"
 
 namespace tone::ui {
     struct MainScreenTabs {
@@ -13,7 +13,7 @@ namespace tone::ui {
 
     ftxui::Component create_main_screen(
         ftxui::Component editor_screen,
-        std::shared_ptr<MainInputProcessor> main_input_processor,
+        std::shared_ptr<main_input_processor> main_input_processor,
         std::shared_ptr<ToneLogger> tone_logger
     );
 }

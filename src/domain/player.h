@@ -4,9 +4,9 @@
 #include <miniaudio.h>
 #include <boost/uuid/uuid.hpp>
 
-#include "DeviceState.h"
+#include "device_state.h"
 #include "logging.h"
-#include "Player.h"
+#include "player.h"
 
 namespace tone {
     class PlayerInfo;
@@ -16,8 +16,8 @@ namespace tone {
         std::shared_ptr<PlayerInfo> player_info;
     };
 
-    class Player {
-        DeviceState state = UN_INIT;
+    class player {
+        device_state state = UN_INIT;
         std::shared_ptr<ToneLogger> logger = nullptr;
         ma_device device{};
         ma_device_config device_config{};
@@ -29,12 +29,12 @@ namespace tone {
         static void play_callback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count);
 
     public:
-        Player(
+        player(
             std::string file_name,
             std::shared_ptr<ToneLogger> tone_logger
         );
 
-        ~Player();
+        ~player();
 
         void init();
 
@@ -46,7 +46,7 @@ namespace tone {
 
         void change_file(std::string file_name);
 
-        DeviceState get_device_state() const;
+        device_state get_device_state() const;
 
         std::shared_ptr<PlayerInfo> get_player_info();
     };
@@ -67,7 +67,7 @@ namespace tone {
             u_int64_t sample_rate
         );
 
-        friend class Player;
+        friend class player;
 
         boost::uuids::uuid get_id() const;
 

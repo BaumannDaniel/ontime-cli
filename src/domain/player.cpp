@@ -1,11 +1,11 @@
-#include "Player.h"
+#include "player.h"
 
 #include <format>
 #include <stdexcept>
 #include <boost/uuid/uuid_generators.hpp>
 #include <utility>
 
-tone::Player::Player(
+tone::player::player(
     std::string file_name,
     std::shared_ptr<ToneLogger> tone_logger
 ) : logger(std::move(tone_logger)){
@@ -17,13 +17,13 @@ tone::Player::Player(
         0);
 }
 
-tone::Player::~Player() {
+tone::player::~player() {
     if (this->state != UN_INIT) {
         this->un_init();
     }
 }
 
-void tone::Player::play_callback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count) {
+void tone::player::play_callback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count) {
     auto config = static_cast<CallbackConfig *>(p_device->pUserData);
     auto *pDecoder = config->decoder;
     if (pDecoder == nullptr) return;
@@ -36,7 +36,7 @@ void tone::Player::play_callback(ma_device *p_device, void *p_output, const void
 }
 
 
-void tone::Player::init() {
+void tone::player::init() {
     if (ma_decoder_init_file(player_info->file_name.c_str(), nullptr, &decoder) != MA_SUCCESS) {
         logger->log(std::format("Failed to init decoder for file: {}", player_info->file_name));
         throw std::runtime_error("Failed to initialize file decoder!");
@@ -64,19 +64,19 @@ void tone::Player::init() {
 }
 
 
-void tone::Player::start() {
+void tone::player::start() {
     ma_device_start(&device);
     logger->log("Playing!");
     this->state = STARTED;
     logger->log("Set state playing!");
 }
 
-void tone::Player::stop() {
+void tone::player::stop() {
     ma_device_stop(&device);
     this->state = STOPPED;
 }
 
-void tone::Player::un_init() {
+void tone::player::un_init() {
     this->stop();
     ma_device_uninit(&device);
     ma_decoder_uninit(&decoder);
@@ -86,18 +86,18 @@ void tone::Player::un_init() {
     this->state = UN_INIT;
 }
 
-void tone::Player::change_file(std::string file_name) {
+void tone::player::change_file(std::string file_name) {
     this->un_init();
     this->player_info->file_name = std::move(file_name);
     this->init();
 }
 
 
-tone::DeviceState tone::Player::get_device_state() const {
+tone::device_state tone::player::get_device_state() const {
     return this->state;
 }
 
-std::shared_ptr<tone::PlayerInfo> tone::Player::get_player_info() {
+std::shared_ptr<tone::PlayerInfo> tone::player::get_player_info() {
     return player_info;
 }
 

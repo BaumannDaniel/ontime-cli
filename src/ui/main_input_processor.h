@@ -2,8 +2,8 @@
 #include <memory>
 #include <string>
 
-#include "DeviceFacade.h"
-#include "DeviceIdManager.h"
+#include "device_facade.h"
+#include "device_id_manager.h"
 #include "logging.h"
 
 class ToneLogger;
@@ -23,17 +23,17 @@ namespace tone::ui {
         static constexpr std::string PLAYER = "player";
     };
 
-    class MainInputProcessor {
+    class main_input_processor {
         std::shared_ptr<ToneLogger> logger;
-        std::shared_ptr<DeviceFacade> device_facade;
-        std::shared_ptr<DeviceIdManager> device_id_mapper;
+        std::shared_ptr<device_facade> device_facade;
+        std::shared_ptr<device_id_manager> device_id_mapper;
 
         boost::uuids::uuid add_player(std::string file_name) const;
 
     public:
-        MainInputProcessor(
-            std::shared_ptr<DeviceFacade> device_facade,
-            std::shared_ptr<DeviceIdManager> device_id_mapper,
+        main_input_processor(
+            std::shared_ptr<device_facade> device_facade,
+            std::shared_ptr<device_id_manager> device_id_mapper,
             std::shared_ptr<ToneLogger> tone_logger
         );
 

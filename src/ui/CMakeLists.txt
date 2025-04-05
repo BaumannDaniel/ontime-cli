@@ -1,11 +1,11 @@
 add_library(
         tone_ui_lib
-        MainScreen.h MainScreen.cpp
-        EditorScreen.h EditorScreen.cpp
-        PlayerComponent.h PlayerComponent.cpp
-        MainInputProcessor.h MainInputProcessor.cpp
+        main_screen.h main_screen.cpp
+        editor_screen.h editor_screen.cpp
+        player_component.h player_component.cpp
+        main_input_processor.h main_input_processor.cpp
         input.h input.cpp
-        DeviceIdManager.h DeviceIdManager.cpp
+        device_id_manager.h device_id_manager.cpp
         formatting.h formatting.cpp
 )
 

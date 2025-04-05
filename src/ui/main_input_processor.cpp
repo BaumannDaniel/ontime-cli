@@ -1,15 +1,15 @@
-#include "MainInputProcessor.h"
+#include "main_input_processor.h"
 
 #include <format>
 #include <memory>
 #include <utility>
 
-#include "Player.h"
+#include "player.h"
 #include "input.h"
 
-tone::ui::MainInputProcessor::MainInputProcessor(
-    std::shared_ptr<DeviceFacade> device_facade,
-    std::shared_ptr<DeviceIdManager> device_id_mapper,
+tone::ui::main_input_processor::main_input_processor(
+    std::shared_ptr<device_facade> device_facade,
+    std::shared_ptr<device_id_manager> device_id_mapper,
     std::shared_ptr<ToneLogger> tone_logger
 ) : logger(std::move(tone_logger)),
     device_facade(std::move(device_facade)),
@@ -17,7 +17,7 @@ tone::ui::MainInputProcessor::MainInputProcessor(
 }
 
 
-void tone::ui::MainInputProcessor::process(std::string input) const {
+void tone::ui::main_input_processor::process(std::string input) const {
     this->logger->log(std::format("MainInputProcessor - received input: {}", input));
     auto parsedInput = parse_input(std::move(input));
     if (parsedInput.empty()) return;
@@ -69,8 +69,8 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
     }
 }
 
-boost::uuids::uuid tone::ui::MainInputProcessor::add_player(std::string file_name) const {
-    auto player = std::make_shared<Player>(file_name, logger);
+boost::uuids::uuid tone::ui::main_input_processor::add_player(std::string file_name) const {
+    auto player = std::make_shared<player>(file_name, logger);
     device_facade->add_player(player);
     return player->get_player_info()->get_id();
 }

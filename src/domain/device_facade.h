@@ -2,14 +2,14 @@
 #include <map>
 #include <vector>
 
-#include "Player.h"
+#include "player.h"
 
 namespace tone {
-    class DeviceFacade {
-        std::map<boost::uuids::uuid, std::shared_ptr<Player> > players{};
+    class device_facade {
+        std::map<boost::uuids::uuid, std::shared_ptr<player> > players{};
 
     public:
-        void add_player(std::shared_ptr<Player> player);
+        void add_player(std::shared_ptr<player> player);
 
         void remove_player(boost::uuids::uuid player_id);
 

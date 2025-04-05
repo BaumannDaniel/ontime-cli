@@ -2,7 +2,7 @@
 #include <utility>
 #include <boost/algorithm/string.hpp>
 
-#include "PlayerComponent.h"
+#include "player_component.h"
 #include "formatting.h"
 
 

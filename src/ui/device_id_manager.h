@@ -8,7 +8,7 @@ namespace tone::ui {
         PLAYER
     };
 
-    class DeviceIdManager {
+    class device_id_manager {
         std::map<std::string, boost::uuids::uuid> ui_to_device_id_map;
         std::map<boost::uuids::uuid, std::string> device_to_ui_id_map;
         std::map<std::string, DeviceType> ui_id_to_device_type_map;
@@ -16,7 +16,7 @@ namespace tone::ui {
 
     public:
 
-        DeviceIdManager();
+        device_id_manager();
 
         void add_id_mapping(std::string ui_id, boost::uuids::uuid device_id, DeviceType device_type);
 
