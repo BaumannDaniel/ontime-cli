@@ -5,7 +5,7 @@
 #include <boost/uuid/uuid_generators.hpp>
 #include <utility>
 
-tone::player::player(
+tone::Player::Player(
     std::string file_name,
     std::shared_ptr<ToneLogger> tone_logger
 ) : logger(std::move(tone_logger)){
@@ -17,13 +17,13 @@ tone::player::player(
         0);
 }
 
-tone::player::~player() {
+tone::Player::~Player() {
     if (this->state != UN_INIT) {
-        this->un_init();
+        this->unInit();
     }
 }
 
-void tone::player::play_callback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count) {
+void tone::Player::playCallback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count) {
     auto config = static_cast<CallbackConfig *>(p_device->pUserData);
     auto *pDecoder = config->decoder;
     if (pDecoder == nullptr) return;
@@ -36,7 +36,7 @@ void tone::player::play_callback(ma_device *p_device, void *p_output, const void
 }
 
 
-void tone::player::init() {
+void tone::Player::init() {
     if (ma_decoder_init_file(player_info->file_name.c_str(), nullptr, &decoder) != MA_SUCCESS) {
         logger->log(std::format("Failed to init decoder for file: {}", player_info->file_name));
         throw std::runtime_error("Failed to initialize file decoder!");
@@ -45,7 +45,7 @@ void tone::player::init() {
     this->device_config.playback.format = decoder.outputFormat;
     this->device_config.playback.channels = decoder.outputChannels;
     this->device_config.sampleRate = decoder.outputSampleRate;
-    this->device_config.dataCallback = play_callback;
+    this->device_config.dataCallback = playCallback;
     ma_uint64 pcm_length;
     ma_decoder_get_length_in_pcm_frames(&decoder, &pcm_length);
     this->player_info->frame_count = pcm_length;
@@ -64,19 +64,19 @@ void tone::player::init() {
 }
 
 
-void tone::player::start() {
+void tone::Player::start() {
     ma_device_start(&device);
     logger->log("Playing!");
     this->state = STARTED;
     logger->log("Set state playing!");
 }
 
-void tone::player::stop() {
+void tone::Player::stop() {
     ma_device_stop(&device);
     this->state = STOPPED;
 }
 
-void tone::player::un_init() {
+void tone::Player::unInit() {
     this->stop();
     ma_device_uninit(&device);
     ma_decoder_uninit(&decoder);
@@ -86,18 +86,18 @@ void tone::player::un_init() {
     this->state = UN_INIT;
 }
 
-void tone::player::change_file(std::string file_name) {
-    this->un_init();
+void tone::Player::changeFile(std::string file_name) {
+    this->unInit();
     this->player_info->file_name = std::move(file_name);
     this->init();
 }
 
 
-tone::device_state tone::player::get_device_state() const {
+tone::DeviceState tone::Player::getDeviceState() const {
     return this->state;
 }
 
-std::shared_ptr<tone::PlayerInfo> tone::player::get_player_info() {
+std::shared_ptr<tone::PlayerInfo> tone::Player::getPlayerInfo() {
     return player_info;
 }
 
@@ -114,22 +114,22 @@ tone::PlayerInfo::PlayerInfo(
     sample_rate(sample_rate) {
 }
 
-boost::uuids::uuid tone::PlayerInfo::get_id() const {
+boost::uuids::uuid tone::PlayerInfo::getId() const {
     return this->id;
 }
 
-std::string tone::PlayerInfo::get_file_name() const {
+std::string tone::PlayerInfo::getFileName() const {
     return this->file_name;
 }
 
-uint64_t tone::PlayerInfo::get_number_of_pcm_frames() const {
+uint64_t tone::PlayerInfo::getNumberOfPcmFrames() const {
     return this->frame_count;
 }
 
-uint64_t tone::PlayerInfo::get_current_pcm_frame_number() const {
+uint64_t tone::PlayerInfo::getCurrentPcmFrameNumber() const {
     return this->file_current_pcm_frame;
 }
 
-u_int64_t tone::PlayerInfo::get_sample_rate() const {
+u_int64_t tone::PlayerInfo::getSampleRate() const {
     return this->sample_rate;
 }

@@ -23,17 +23,17 @@ namespace tone::ui {
         static constexpr std::string PLAYER = "player";
     };
 
-    class main_input_processor {
+    class MainInputProcessor {
         std::shared_ptr<ToneLogger> logger;
-        std::shared_ptr<device_facade> device_facade;
-        std::shared_ptr<device_id_manager> device_id_mapper;
+        std::shared_ptr<DeviceFacade> device_facade;
+        std::shared_ptr<DeviceIdManager> device_id_mapper;
 
         boost::uuids::uuid add_player(std::string file_name) const;
 
     public:
-        main_input_processor(
-            std::shared_ptr<device_facade> device_facade,
-            std::shared_ptr<device_id_manager> device_id_mapper,
+        MainInputProcessor(
+            std::shared_ptr<DeviceFacade> device_facade,
+            std::shared_ptr<DeviceIdManager> device_id_mapper,
             std::shared_ptr<ToneLogger> tone_logger
         );
 

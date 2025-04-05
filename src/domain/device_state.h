@@ -1,7 +1,7 @@
 #pragma once
 
 namespace tone {
-    enum device_state {
+    enum DeviceState {
         UN_INIT,
         FAILED,
         INIT,

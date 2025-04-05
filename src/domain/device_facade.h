@@ -5,20 +5,20 @@
 #include "player.h"
 
 namespace tone {
-    class device_facade {
-        std::map<boost::uuids::uuid, std::shared_ptr<player> > players{};
+    class DeviceFacade {
+        std::map<boost::uuids::uuid, std::shared_ptr<Player> > players{};
 
     public:
-        void add_player(std::shared_ptr<player> player);
+        void addPlayer(std::shared_ptr<Player> player);
 
-        void remove_player(boost::uuids::uuid player_id);
+        void removePlayer(boost::uuids::uuid player_id);
 
-        void start_player(boost::uuids::uuid player_id) const;
+        void startPlayer(boost::uuids::uuid player_id) const;
 
-        void stop_player(boost::uuids::uuid player_id) const;
+        void stopPlayer(boost::uuids::uuid player_id) const;
 
-        void change_player_file(boost::uuids::uuid player_id, std::string file_name) const;
+        void changePlayerFile(boost::uuids::uuid player_id, std::string file_name) const;
 
-        std::vector<std::shared_ptr<PlayerInfo> > get_players_info() const;
+        std::vector<std::shared_ptr<PlayerInfo> > getPlayersInfo() const;
     };
 }

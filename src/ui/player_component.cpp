@@ -30,10 +30,10 @@ tone::ui::PlayerComponentBase::PlayerComponentBase(
 
 ftxui::Element tone::ui::PlayerComponentBase::Render() {
     auto formatted_player_id = std::format("Player {} ", boost::to_upper_copy(ui_id));
-    auto formatted_player_file_name = std::format(" {} ", player_info->get_file_name());
-    auto player_sample_rate = player_info->get_sample_rate();
-    auto file_length_seconds = player_info->get_number_of_pcm_frames() / player_sample_rate;
-    auto current_file_position = player_info->get_current_pcm_frame_number() / player_sample_rate;
+    auto formatted_player_file_name = std::format(" {} ", player_info->getFileName());
+    auto player_sample_rate = player_info->getSampleRate();
+    auto file_length_seconds = player_info->getNumberOfPcmFrames() / player_sample_rate;
+    auto current_file_position = player_info->getCurrentPcmFrameNumber() / player_sample_rate;
     auto show_hours = file_length_seconds >= 60 * 60;
     auto formatted_position = seconds_to_display_format(current_file_position, show_hours);
     auto formatted_length = seconds_to_display_format(file_length_seconds, show_hours);

@@ -16,8 +16,8 @@ namespace tone {
         std::shared_ptr<PlayerInfo> player_info;
     };
 
-    class player {
-        device_state state = UN_INIT;
+    class Player {
+        DeviceState state = UN_INIT;
         std::shared_ptr<ToneLogger> logger = nullptr;
         ma_device device{};
         ma_device_config device_config{};
@@ -26,15 +26,15 @@ namespace tone {
         std::shared_ptr<PlayerInfo> player_info = nullptr;
         CallbackConfig callback_config;
 
-        static void play_callback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count);
+        static void playCallback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count);
 
     public:
-        player(
+        Player(
             std::string file_name,
             std::shared_ptr<ToneLogger> tone_logger
         );
 
-        ~player();
+        ~Player();
 
         void init();
 
@@ -42,13 +42,13 @@ namespace tone {
 
         void stop();
 
-        void un_init();
+        void unInit();
 
-        void change_file(std::string file_name);
+        void changeFile(std::string file_name);
 
-        device_state get_device_state() const;
+        DeviceState getDeviceState() const;
 
-        std::shared_ptr<PlayerInfo> get_player_info();
+        std::shared_ptr<PlayerInfo> getPlayerInfo();
     };
 
     class PlayerInfo {
@@ -67,16 +67,16 @@ namespace tone {
             u_int64_t sample_rate
         );
 
-        friend class player;
+        friend class Player;
 
-        boost::uuids::uuid get_id() const;
+        boost::uuids::uuid getId() const;
 
-        std::string get_file_name() const;
+        std::string getFileName() const;
 
-        uint64_t get_number_of_pcm_frames() const;
+        uint64_t getNumberOfPcmFrames() const;
 
-        uint64_t get_current_pcm_frame_number() const;
+        uint64_t getCurrentPcmFrameNumber() const;
 
-        u_int64_t get_sample_rate() const;
+        u_int64_t getSampleRate() const;
     };
 }

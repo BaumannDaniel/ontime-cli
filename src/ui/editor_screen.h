@@ -7,8 +7,8 @@
 
 namespace tone::ui {
     ftxui::Component create_editor_screen(
-        std::shared_ptr<device_facade> device_facade,
-        std::shared_ptr<device_id_manager> device_id_mapper,
+        std::shared_ptr<DeviceFacade> device_facade,
+        std::shared_ptr<DeviceIdManager> device_id_mapper,
         std::shared_ptr<ToneLogger> tone_logger
     );
 }

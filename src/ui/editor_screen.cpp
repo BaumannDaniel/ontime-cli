@@ -11,14 +11,14 @@
 namespace tone::ui {
     class EditorScreenBase : public ftxui::ComponentBase {
         std::shared_ptr<ToneLogger> logger;
-        std::shared_ptr<device_facade> device_facade;
-        std::shared_ptr<device_id_manager> device_id_mapper;
+        std::shared_ptr<DeviceFacade> device_facade;
+        std::shared_ptr<DeviceIdManager> device_id_mapper;
         std::map<boost::uuids::uuid, ftxui::Component> player_components;
 
     public:
         EditorScreenBase(
-            std::shared_ptr<device_facade> device_facade,
-            std::shared_ptr<device_id_manager> device_id_mapper,
+            std::shared_ptr<DeviceFacade> device_facade,
+            std::shared_ptr<DeviceIdManager> device_id_mapper,
             std::shared_ptr<ToneLogger> tone_logger
         );
 
@@ -27,8 +27,8 @@ namespace tone::ui {
 }
 
 tone::ui::EditorScreenBase::EditorScreenBase(
-    std::shared_ptr<device_facade> device_facade,
-    std::shared_ptr<device_id_manager> device_id_mapper,
+    std::shared_ptr<DeviceFacade> device_facade,
+    std::shared_ptr<DeviceIdManager> device_id_mapper,
     std::shared_ptr<ToneLogger> tone_logger
 ) : logger(std::move(tone_logger)),
     device_facade(std::move(device_facade)),
@@ -36,10 +36,10 @@ tone::ui::EditorScreenBase::EditorScreenBase(
 }
 
 ftxui::Element tone::ui::EditorScreenBase::Render() {
-    auto players_info = device_facade->get_players_info();
+    auto players_info = device_facade->getPlayersInfo();
     std::set<boost::uuids::uuid> current_player_ids;
     for (const auto &player_info: players_info) {
-        auto player_id = player_info->get_id();
+        auto player_id = player_info->getId();
         current_player_ids.insert(player_id);
         if (player_components.contains(player_id)) continue;
         auto player_ui_id = device_id_mapper->get_available_ui_id();
@@ -61,8 +61,8 @@ ftxui::Element tone::ui::EditorScreenBase::Render() {
 }
 
 ftxui::Component tone::ui::create_editor_screen(
-    std::shared_ptr<device_facade> device_facade,
-    std::shared_ptr<device_id_manager> device_id_mapper,
+    std::shared_ptr<DeviceFacade> device_facade,
+    std::shared_ptr<DeviceIdManager> device_id_mapper,
     std::shared_ptr<ToneLogger> tone_logger
 ) {
     return ftxui::Make<EditorScreenBase>(device_facade, device_id_mapper, tone_logger);
