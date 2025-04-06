@@ -9,7 +9,7 @@
 
 int main() {
     auto log_file = "/home/daniel/Documents/tone_cli_workspace/log.txt";
-    auto logger = std::make_shared<ToneLogger>(log_file);
+    auto logger = std::make_shared<tone::DebugLogger>(log_file);
     logger->log("----- Started Tone CLI -----");
     auto device_id_mapper = std::make_shared<tone::ui::DeviceIdManager>();
     auto device_facade = std::make_shared<tone::DeviceFacade>(tone::DeviceFacade());

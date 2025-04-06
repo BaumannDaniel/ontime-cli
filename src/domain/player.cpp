@@ -7,8 +7,8 @@
 
 tone::Player::Player(
     std::string file_name,
-    std::shared_ptr<ToneLogger> tone_logger
-) : logger(std::move(tone_logger)){
+    std::shared_ptr<ILogger> logger
+) : logger(std::move(logger)){
     this->player_info = std::make_shared<PlayerInfo>(
         boost::uuids::random_generator()(),
         std::move(file_name),

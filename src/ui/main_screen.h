@@ -14,6 +14,6 @@ namespace tone::ui {
     ftxui::Component createMainScreen(
         ftxui::Component editor_screen,
         std::shared_ptr<MainInputProcessor> main_input_processor,
-        std::shared_ptr<ToneLogger> tone_logger
+        std::shared_ptr<ILogger> logger
     );
 }

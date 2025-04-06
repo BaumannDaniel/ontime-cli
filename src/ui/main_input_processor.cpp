@@ -10,8 +10,8 @@
 tone::ui::MainInputProcessor::MainInputProcessor(
     std::shared_ptr<DeviceFacade> device_facade,
     std::shared_ptr<DeviceIdManager> device_id_mapper,
-    std::shared_ptr<ToneLogger> tone_logger
-) : logger(std::move(tone_logger)),
+    std::shared_ptr<ILogger> logger
+) : logger(std::move(logger)),
     device_facade(std::move(device_facade)),
     device_id_mapper(std::move(device_id_mapper)) {
 }
@@ -36,7 +36,7 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
     }
     if (parsedInput[0] == InputCommands::START) {
         if (parsedInput.size() < 2) return;
-        const std::string& device_ui_id = parsedInput[1];
+        const std::string &device_ui_id = parsedInput[1];
         DeviceType device_type = device_id_mapper->getDeviceTypeByUiId(device_ui_id);
         if (device_type != PLAYER) return;
         boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id);
@@ -44,7 +44,7 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
     }
     if (parsedInput[0] == InputCommands::STOP) {
         if (parsedInput.size() < 2) return;
-        const std::string& device_ui_id = parsedInput[1];
+        const std::string &device_ui_id = parsedInput[1];
         DeviceType device_type = device_id_mapper->getDeviceTypeByUiId(device_ui_id);
         if (device_type != PLAYER) return;
         boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id);
@@ -52,7 +52,7 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
     }
     if (parsedInput[0] == InputCommands::REMOVE) {
         if (parsedInput.size() < 2) return;
-        const std::string& device_ui_id = parsedInput[1];
+        const std::string &device_ui_id = parsedInput[1];
         DeviceType device_type = device_id_mapper->getDeviceTypeByUiId(device_ui_id);
         if (device_type != PLAYER) return;
         boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id);
@@ -60,11 +60,11 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
     }
     if (parsedInput[0] == InputCommands::FILE) {
         if (parsedInput.size() < 3) return;
-        const std::string& device_ui_id = parsedInput[1];
+        const std::string &device_ui_id = parsedInput[1];
         DeviceType device_type = device_id_mapper->getDeviceTypeByUiId(device_ui_id);
         if (device_type != PLAYER) return;
         boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id);
-        const auto& file = parsedInput[2];
+        const auto &file = parsedInput[2];
         device_facade->changePlayerFile(device_id, file);
     }
 }

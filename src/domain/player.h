@@ -18,7 +18,7 @@ namespace tone {
 
     class Player {
         DeviceState state = UN_INIT;
-        std::shared_ptr<ToneLogger> logger = nullptr;
+        std::shared_ptr<ILogger> logger = nullptr;
         ma_device device{};
         ma_device_config device_config{};
         ma_decoder_config decoder_config{};
@@ -31,7 +31,7 @@ namespace tone {
     public:
         Player(
             std::string file_name,
-            std::shared_ptr<ToneLogger> tone_logger
+            std::shared_ptr<ILogger> logger
         );
 
         ~Player();

@@ -24,7 +24,7 @@ namespace tone::ui {
     };
 
     class MainInputProcessor {
-        std::shared_ptr<ToneLogger> logger;
+        std::shared_ptr<ILogger> logger;
         std::shared_ptr<DeviceFacade> device_facade;
         std::shared_ptr<DeviceIdManager> device_id_mapper;
 
@@ -34,7 +34,7 @@ namespace tone::ui {
         MainInputProcessor(
             std::shared_ptr<DeviceFacade> device_facade,
             std::shared_ptr<DeviceIdManager> device_id_mapper,
-            std::shared_ptr<ToneLogger> tone_logger
+            std::shared_ptr<ILogger> logger
         );
 
         void process(std::string input) const;
