@@ -14,7 +14,7 @@ std::string tone::ui::trim_whitespace(std::string str) {
     return str;
 }
 
-std::vector<std::string> tone::ui::parse_input(std::string input) {
+std::vector<std::string> tone::ui::parseInput(std::string input) {
     input = trim_whitespace(input);
     std::vector<std::string> segments = {};
     if (input.empty()) return segments;

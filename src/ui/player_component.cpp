@@ -35,8 +35,8 @@ ftxui::Element tone::ui::PlayerComponentBase::Render() {
     auto file_length_seconds = player_info->getNumberOfPcmFrames() / player_sample_rate;
     auto current_file_position = player_info->getCurrentPcmFrameNumber() / player_sample_rate;
     auto show_hours = file_length_seconds >= 60 * 60;
-    auto formatted_position = seconds_to_display_format(current_file_position, show_hours);
-    auto formatted_length = seconds_to_display_format(file_length_seconds, show_hours);
+    auto formatted_position = secondsToDisplayFormat(current_file_position, show_hours);
+    auto formatted_length = secondsToDisplayFormat(file_length_seconds, show_hours);
     auto formatted_progress = std::format(" {} / {}", formatted_position, formatted_length);
     return vbox(
                hbox(
@@ -49,7 +49,7 @@ ftxui::Element tone::ui::PlayerComponentBase::Render() {
            ) | ftxui::border;
 }
 
-ftxui::Component tone::ui::create_player_component(
+ftxui::Component tone::ui::createPlayerComponent(
     std::string ui_id,
     std::shared_ptr<PlayerInfo> player_info
 ) {

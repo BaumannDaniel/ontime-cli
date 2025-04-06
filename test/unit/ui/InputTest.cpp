@@ -22,7 +22,7 @@ TEST(trimWhitespace, removes_double_whitespace) {
 
 TEST(parseInput, splits_input_string) {
     const std::string test_string = "  test  string  ";
-    const auto parsed_input = tone::ui::parse_input(test_string);
+    const auto parsed_input = tone::ui::parseInput(test_string);
     ASSERT_EQ(2, parsed_input.size());
     ASSERT_EQ(parsed_input[0], "test");
     ASSERT_EQ(parsed_input[1], "string");
@@ -30,6 +30,6 @@ TEST(parseInput, splits_input_string) {
 
 TEST(parseInput, handles_empty_string) {
     const std::string test_string = "  ";
-    const auto parsed_input = tone::ui::parse_input(test_string);
+    const auto parsed_input = tone::ui::parseInput(test_string);
     ASSERT_EQ(0, parsed_input.size());
 }

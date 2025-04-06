@@ -14,8 +14,8 @@ int main() {
     auto device_id_mapper = std::make_shared<tone::ui::DeviceIdManager>();
     auto device_facade = std::make_shared<tone::DeviceFacade>(tone::DeviceFacade());
     auto main_input_processor = std::make_shared<tone::ui::MainInputProcessor>(device_facade, device_id_mapper, logger);
-    auto editor_screen = create_editor_screen(device_facade, device_id_mapper, logger);
-    auto main_screen = create_main_screen(editor_screen, main_input_processor, logger);
+    auto editor_screen = createEditorScreen(device_facade, device_id_mapper, logger);
+    auto main_screen = createMainScreen(editor_screen, main_input_processor, logger);
     auto screen = ftxui::ScreenInteractive::TerminalOutput();
     std::thread update([&] {
         while (true) {

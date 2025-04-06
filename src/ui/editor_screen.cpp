@@ -42,15 +42,15 @@ ftxui::Element tone::ui::EditorScreenBase::Render() {
         auto player_id = player_info->getId();
         current_player_ids.insert(player_id);
         if (player_components.contains(player_id)) continue;
-        auto player_ui_id = device_id_mapper->get_available_ui_id();
-        auto player_component = create_player_component(player_ui_id, player_info);
+        auto player_ui_id = device_id_mapper->getAvailableUiId();
+        auto player_component = createPlayerComponent(player_ui_id, player_info);
         player_components.insert({player_id, player_component});
-        device_id_mapper->add_id_mapping(player_ui_id, player_id, PLAYER);
+        device_id_mapper->addIdMapping(player_ui_id, player_id, PLAYER);
     }
     for (const auto& player : player_components) {
         if (!current_player_ids.contains(player.first)) {
             player_components.erase(player.first);
-            device_id_mapper->remove_id_mapping_by_device_id(player.first);
+            device_id_mapper->removeIdMappingByDeviceId(player.first);
         }
     }
     std::vector<ftxui::Element> player_elements;
@@ -60,7 +60,7 @@ ftxui::Element tone::ui::EditorScreenBase::Render() {
     return vbox(player_elements);
 }
 
-ftxui::Component tone::ui::create_editor_screen(
+ftxui::Component tone::ui::createEditorScreen(
     std::shared_ptr<DeviceFacade> device_facade,
     std::shared_ptr<DeviceIdManager> device_id_mapper,
     std::shared_ptr<ToneLogger> tone_logger

@@ -11,7 +11,7 @@ namespace tone::ui {
         static constexpr std::string SETTINGS = "Settings";
     };
 
-    ftxui::Component create_main_screen(
+    ftxui::Component createMainScreen(
         ftxui::Component editor_screen,
         std::shared_ptr<MainInputProcessor> main_input_processor,
         std::shared_ptr<ToneLogger> tone_logger

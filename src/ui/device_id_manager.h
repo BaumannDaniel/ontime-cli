@@ -18,17 +18,17 @@ namespace tone::ui {
 
         DeviceIdManager();
 
-        void add_id_mapping(std::string ui_id, boost::uuids::uuid device_id, DeviceType device_type);
+        void addIdMapping(std::string ui_id, boost::uuids::uuid device_id, DeviceType device_type);
 
-        void remove_id_mapping_by_device_id(boost::uuids::uuid device_id);
+        void removeIdMappingByDeviceId(boost::uuids::uuid device_id);
 
-        boost::uuids::uuid get_device_id(std::string ui_id);
+        boost::uuids::uuid getDeviceId(std::string ui_id);
 
-        std::string get_ui_id(boost::uuids::uuid device_id);
+        std::string getUiId(boost::uuids::uuid device_id);
 
-        std::string get_available_ui_id();
+        std::string getAvailableUiId();
 
-        DeviceType get_device_type_by_ui_id(std::string ui_id);
+        DeviceType getDeviceTypeByUiId(std::string ui_id);
 
         static constexpr u_int16_t MAX_DEVICES = 10;
     };

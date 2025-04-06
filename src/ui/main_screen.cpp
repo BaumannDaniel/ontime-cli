@@ -86,7 +86,7 @@ ftxui::Element tone::ui::MainScreenBase::Render() {
     );
 }
 
-ftxui::Component tone::ui::create_main_screen(
+ftxui::Component tone::ui::createMainScreen(
     ftxui::Component editor_screen,
     std::shared_ptr<MainInputProcessor> main_input_processor,
     std::shared_ptr<ToneLogger> tone_logger

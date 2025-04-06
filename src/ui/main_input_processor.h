@@ -28,7 +28,7 @@ namespace tone::ui {
         std::shared_ptr<DeviceFacade> device_facade;
         std::shared_ptr<DeviceIdManager> device_id_mapper;
 
-        boost::uuids::uuid add_player(std::string file_name) const;
+        boost::uuids::uuid addPlayer(std::string file_name) const;
 
     public:
         MainInputProcessor(

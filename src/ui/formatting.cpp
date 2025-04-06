@@ -4,7 +4,7 @@
 
 std::string fill_time_value(u_int64_t time_value);
 
-std::string tone::ui::seconds_to_display_format(u_int64_t seconds, bool use_hours) {
+std::string tone::ui::secondsToDisplayFormat(u_int64_t seconds, bool use_hours) {
     auto formatted_seconds = seconds % 60;
     auto time_without_seconds = seconds - formatted_seconds;
     auto minutes = time_without_seconds / 60;
