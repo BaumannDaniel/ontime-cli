@@ -2,17 +2,17 @@
 
 #include "formatting.h"
 
-TEST(seconds_to_display_format, formats_single_digit_seconds) {
+TEST(secondsToDisplayFormat, formatsSingleDigitSeconds) {
     const auto result = tone::ui::secondsToDisplayFormat(9, false);
     ASSERT_EQ("00:09", result);
 }
 
-TEST(seconds_to_display_format, formats_single_digit_minutes) {
+TEST(secondsToDisplayFormat, formatsSingleDigitMinutes) {
     const auto result = tone::ui::secondsToDisplayFormat(72, false);
     ASSERT_EQ("01:12", result);
 }
 
-TEST(seconds_to_display_format, formats_single_digit_hours) {
+TEST(secondsToDisplayFormat, formatsSingleDigitHours) {
     const auto result = tone::ui::secondsToDisplayFormat(60 * 72, true);
     ASSERT_EQ("01:12:00", result);
 }

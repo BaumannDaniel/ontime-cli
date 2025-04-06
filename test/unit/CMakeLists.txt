@@ -1,7 +1,7 @@
 add_executable(
         tone_ui_unit_tests
-        ui/InputTest.cpp
-        ui/FormattingTest.cpp
+        ui/input_test.cpp
+        ui/formatting_test.cpp
 )
 target_link_libraries(
         tone_ui_unit_tests

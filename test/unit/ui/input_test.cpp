@@ -2,25 +2,25 @@
 
 #include "input.h"
 
-TEST(trimWhitespace, removes_leading_whitespace) {
+TEST(trimWhitespace, removesLeadingWhitespace) {
     const std::string test_string = " test string";
     const auto trimmed_string = tone::ui::trim_whitespace(test_string);
     ASSERT_EQ("test string", trimmed_string);
 }
 
-TEST(trimWhitespace, removes_trailing_whitespace) {
+TEST(trimWhitespace, removesTrailingWhitespace) {
     const std::string test_string = "test string ";
     const auto trimmed_string = tone::ui::trim_whitespace(test_string);
     ASSERT_EQ("test string", trimmed_string);
 }
 
-TEST(trimWhitespace, removes_double_whitespace) {
+TEST(trimWhitespace, removesDoubleWhitespace) {
     const std::string test_string = "  test  string  ";
     const auto trimmed_string = tone::ui::trim_whitespace(test_string);
     ASSERT_EQ("test string", trimmed_string);
 }
 
-TEST(parseInput, splits_input_string) {
+TEST(parseInput, splitsInputString) {
     const std::string test_string = "  test  string  ";
     const auto parsed_input = tone::ui::parseInput(test_string);
     ASSERT_EQ(2, parsed_input.size());
@@ -28,7 +28,7 @@ TEST(parseInput, splits_input_string) {
     ASSERT_EQ(parsed_input[1], "string");
 }
 
-TEST(parseInput, handles_empty_string) {
+TEST(parseInput, handlesEmptyString) {
     const std::string test_string = "  ";
     const auto parsed_input = tone::ui::parseInput(test_string);
     ASSERT_EQ(0, parsed_input.size());
