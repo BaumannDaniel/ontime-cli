@@ -11,13 +11,13 @@
 namespace tone::ui {
     class EditorScreenBase : public ftxui::ComponentBase {
         std::shared_ptr<ILogger> logger;
-        std::shared_ptr<DeviceFacade> device_facade;
+        std::shared_ptr<IDeviceFacade> device_facade;
         std::shared_ptr<DeviceIdManager> device_id_mapper;
         std::map<boost::uuids::uuid, ftxui::Component> player_components;
 
     public:
         EditorScreenBase(
-            std::shared_ptr<DeviceFacade> device_facade,
+            std::shared_ptr<IDeviceFacade> device_facade,
             std::shared_ptr<DeviceIdManager> device_id_mapper,
             std::shared_ptr<ILogger> logger
         );
@@ -27,7 +27,7 @@ namespace tone::ui {
 }
 
 tone::ui::EditorScreenBase::EditorScreenBase(
-    std::shared_ptr<DeviceFacade> device_facade,
+    std::shared_ptr<IDeviceFacade> device_facade,
     std::shared_ptr<DeviceIdManager> device_id_mapper,
     std::shared_ptr<ILogger> logger
 ) : logger(std::move(logger)),
@@ -61,7 +61,7 @@ ftxui::Element tone::ui::EditorScreenBase::Render() {
 }
 
 ftxui::Component tone::ui::createEditorScreen(
-    std::shared_ptr<DeviceFacade> device_facade,
+    std::shared_ptr<IDeviceFacade> device_facade,
     std::shared_ptr<DeviceIdManager> device_id_mapper,
     std::shared_ptr<ILogger> logger
 ) {
