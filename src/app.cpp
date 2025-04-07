@@ -1,8 +1,7 @@
-#define MINIAUDIO_IMPLEMENTATION
-
 #include "ftxui/component/component.hpp"
 #include "ftxui/component/screen_interactive.hpp"
 
+#include "config.h" // NOLINT
 #include "device_id_manager.h"
 #include "editor_screen.h"
 #include "ui/main_screen.h"
