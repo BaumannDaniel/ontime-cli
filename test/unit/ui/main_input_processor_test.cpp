@@ -1,13 +1,12 @@
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
+#include <boost/uuid/random_generator.hpp>
 
 #include "config.h" // NOLINT
 #include "main_input_processor.h"
-
-#include <boost/uuid/random_generator.hpp>
-
 #include "device_id_manager.h"
 #include "player.h"
+
 #include "../util/device_facade_mock.h"
 #include "../util/logger_mock.h"
 
@@ -81,6 +80,39 @@ namespace tone::test {
                     }
                 )
             )
+        );
+        main_input_processor.process(input);
+    }
+
+    TEST_F(MainInputProcessorTest, process$stopsPlayer) {
+        device_id_manager->addIdMapping(player_1_ui_id, player_1_device_id, ui::PLAYER);
+        const std::string input = std::format("stop {}", player_1_ui_id);
+        const auto mock_device_facade = device_facade.get();
+        EXPECT_CALL(
+            *mock_device_facade,
+            stopPlayer(player_1_device_id)
+        );
+        main_input_processor.process(input);
+    }
+
+    TEST_F(MainInputProcessorTest, process$removesPlayer) {
+        device_id_manager->addIdMapping(player_1_ui_id, player_1_device_id, ui::PLAYER);
+        const std::string input = std::format("remove {}", player_1_ui_id);
+        const auto mock_device_facade = device_facade.get();
+        EXPECT_CALL(
+            *mock_device_facade,
+            removePlayer(player_1_device_id)
+        );
+        main_input_processor.process(input);
+    }
+
+    TEST_F(MainInputProcessorTest, process$changesFileOnPlayer) {
+        device_id_manager->addIdMapping(player_1_ui_id, player_1_device_id, ui::PLAYER);
+        const std::string input = std::format("file {} {}", player_1_ui_id, test_file_1);
+        const auto mock_device_facade = device_facade.get();
+        EXPECT_CALL(
+            *mock_device_facade,
+            changePlayerFile(player_1_device_id, test_file_1)
         );
         main_input_processor.process(input);
     }
