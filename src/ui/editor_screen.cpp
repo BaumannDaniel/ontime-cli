@@ -43,9 +43,9 @@ ftxui::Element tone::ui::EditorScreenBase::Render() {
         current_player_ids.insert(player_id);
         if (player_components.contains(player_id)) continue;
         auto player_ui_id = device_id_mapper->getAvailableUiId();
-        auto player_component = createPlayerComponent(player_ui_id, player_info);
+        auto player_component = createPlayerComponent(player_ui_id.value(), player_info);
         player_components.insert({player_id, player_component});
-        device_id_mapper->addIdMapping(player_ui_id, player_id, PLAYER);
+        device_id_mapper->addIdMapping(player_ui_id.value(), player_id, PLAYER);
     }
     for (const auto& player : player_components) {
         if (!current_player_ids.contains(player.first)) {

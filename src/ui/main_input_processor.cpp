@@ -16,7 +16,6 @@ tone::ui::MainInputProcessor::MainInputProcessor(
     device_id_mapper(std::move(device_id_mapper)) {
 }
 
-
 void tone::ui::MainInputProcessor::process(std::string input) const {
     this->logger->log(std::format("MainInputProcessor - received input: {}", input));
     auto parsedInput = parseInput(std::move(input));
@@ -37,33 +36,33 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
     if (parsedInput[0] == InputCommands::START) {
         if (parsedInput.size() < 2) return;
         const std::string &device_ui_id = parsedInput[1];
-        DeviceType device_type = device_id_mapper->getDeviceTypeByUiId(device_ui_id);
+        DeviceType device_type = device_id_mapper->getDeviceTypeByUiId(device_ui_id).value();
         if (device_type != PLAYER) return;
-        boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id);
+        boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id).value();
         device_facade->startPlayer(device_id);
     }
     if (parsedInput[0] == InputCommands::STOP) {
         if (parsedInput.size() < 2) return;
         const std::string &device_ui_id = parsedInput[1];
-        DeviceType device_type = device_id_mapper->getDeviceTypeByUiId(device_ui_id);
+        DeviceType device_type = device_id_mapper->getDeviceTypeByUiId(device_ui_id).value();
         if (device_type != PLAYER) return;
-        boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id);
+        boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id).value();
         device_facade->stopPlayer(device_id);
     }
     if (parsedInput[0] == InputCommands::REMOVE) {
         if (parsedInput.size() < 2) return;
         const std::string &device_ui_id = parsedInput[1];
-        DeviceType device_type = device_id_mapper->getDeviceTypeByUiId(device_ui_id);
+        DeviceType device_type = device_id_mapper->getDeviceTypeByUiId(device_ui_id).value();
         if (device_type != PLAYER) return;
-        boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id);
+        boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id).value();
         device_facade->removePlayer(device_id);
     }
     if (parsedInput[0] == InputCommands::FILE) {
         if (parsedInput.size() < 3) return;
         const std::string &device_ui_id = parsedInput[1];
-        DeviceType device_type = device_id_mapper->getDeviceTypeByUiId(device_ui_id);
+        DeviceType device_type = device_id_mapper->getDeviceTypeByUiId(device_ui_id).value();
         if (device_type != PLAYER) return;
-        boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id);
+        boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id).value();
         const auto &file = parsedInput[2];
         device_facade->changePlayerFile(device_id, file);
     }
