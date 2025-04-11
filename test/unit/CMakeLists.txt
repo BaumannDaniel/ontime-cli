@@ -5,7 +5,7 @@ add_executable(
         ui/input_test.cpp
         ui/main_input_processor_test.cpp
         util/logger_mock.h
-        util/device_facade_mock.h
+        util/device_repository_mock.h
 )
 target_link_libraries(
         tone_ui_unit_tests

@@ -4,7 +4,7 @@ add_library(
         #default_recorder.h default_recorder.cpp
         player.h player.cpp
         device_state.h
-        device_facade.h device_facade.cpp
+        device_repository.h device_repository.cpp
         logging.h logging.cpp
 )
 

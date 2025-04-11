@@ -6,9 +6,9 @@
 
 namespace tone {
 
-    class IDeviceFacade {
+    class IDeviceRepository {
     public:
-        virtual ~IDeviceFacade() = default;
+        virtual ~IDeviceRepository() = default;
 
         virtual void addPlayer(std::shared_ptr<Player> player) = 0;
 
@@ -23,7 +23,7 @@ namespace tone {
         virtual std::vector<std::shared_ptr<PlayerInfo> > getPlayersInfo() const = 0;
     };
 
-    class DeviceFacade : public IDeviceFacade {
+    class DeviceRepository : public IDeviceRepository {
         std::map<boost::uuids::uuid, std::shared_ptr<Player> > players{};
 
     public:

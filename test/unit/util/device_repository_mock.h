@@ -1,10 +1,10 @@
 #pragma once
 #include <gmock/gmock-function-mocker.h>
 
-#include "device_facade.h"
+#include "device_repository.h"
 
 namespace tone::test {
-    class MockDeviceFacade final : public IDeviceFacade {
+    class MockDeviceRepository final : public IDeviceRepository {
     public:
         MOCK_METHOD(void, addPlayer, (std::shared_ptr<Player> player), (override));
         MOCK_METHOD(void, removePlayer, (boost::uuids::uuid player_id), (override));

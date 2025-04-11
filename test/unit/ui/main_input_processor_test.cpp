@@ -7,7 +7,7 @@
 #include "device_id_manager.h"
 #include "player.h"
 
-#include "../util/device_facade_mock.h"
+#include "../util/device_repository_mock.h"
 #include "../util/logger_mock.h"
 
 namespace tone::test {
@@ -19,22 +19,22 @@ namespace tone::test {
 
         std::shared_ptr<ui::DeviceIdManager> device_id_manager;
         std::shared_ptr<MockLogger> logger;
-        std::shared_ptr<MockDeviceFacade> device_facade;
+        std::shared_ptr<MockDeviceRepository> device_repository;
         ui::MainInputProcessor main_input_processor;
 
         MainInputProcessorTest()
             : device_id_manager(std::make_shared<ui::DeviceIdManager>()),
               logger(std::make_shared<MockLogger>()),
-              device_facade(std::make_shared<MockDeviceFacade>()),
+              device_repository(std::make_shared<MockDeviceRepository>()),
               main_input_processor(
-                  ui::MainInputProcessor(device_facade, device_id_manager, logger)
+                  ui::MainInputProcessor(device_repository, device_id_manager, logger)
               ) {
         }
     };
 
     TEST_F(MainInputProcessorTest, process$addsPlayerToDeviceFacade) {
         const std::string input = std::format("add player {}", test_file_1);
-        const auto mock_device_facade = device_facade.get();
+        const auto mock_device_facade = device_repository.get();
         EXPECT_CALL(
             *mock_device_facade,
             addPlayer(testing::Truly([&](const std::shared_ptr<Player>& player) {
@@ -49,7 +49,7 @@ namespace tone::test {
     TEST_F(MainInputProcessorTest, process$startsPlayer) {
         device_id_manager->addIdMapping(player_1_ui_id, player_1_device_id, ui::PLAYER);
         const std::string input = std::format("start {}", player_1_ui_id);
-        const auto mock_device_facade = device_facade.get();
+        const auto mock_device_facade = device_repository.get();
         EXPECT_CALL(
             *mock_device_facade,
             startPlayer(player_1_device_id)
@@ -59,7 +59,7 @@ namespace tone::test {
 
     TEST_F(MainInputProcessorTest, process$playsMp3File) {
         const std::string input = std::format("play {}", test_file_1);
-        const auto mock_device_facade = device_facade.get();
+        const auto mock_device_facade = device_repository.get();
         boost::uuids::uuid player_device_id;
         testing::InSequence seq;
         EXPECT_CALL(
@@ -87,7 +87,7 @@ namespace tone::test {
     TEST_F(MainInputProcessorTest, process$stopsPlayer) {
         device_id_manager->addIdMapping(player_1_ui_id, player_1_device_id, ui::PLAYER);
         const std::string input = std::format("stop {}", player_1_ui_id);
-        const auto mock_device_facade = device_facade.get();
+        const auto mock_device_facade = device_repository.get();
         EXPECT_CALL(
             *mock_device_facade,
             stopPlayer(player_1_device_id)
@@ -98,7 +98,7 @@ namespace tone::test {
     TEST_F(MainInputProcessorTest, process$removesPlayer) {
         device_id_manager->addIdMapping(player_1_ui_id, player_1_device_id, ui::PLAYER);
         const std::string input = std::format("remove {}", player_1_ui_id);
-        const auto mock_device_facade = device_facade.get();
+        const auto mock_device_facade = device_repository.get();
         EXPECT_CALL(
             *mock_device_facade,
             removePlayer(player_1_device_id)
@@ -109,7 +109,7 @@ namespace tone::test {
     TEST_F(MainInputProcessorTest, process$changesFileOnPlayer) {
         device_id_manager->addIdMapping(player_1_ui_id, player_1_device_id, ui::PLAYER);
         const std::string input = std::format("file {} {}", player_1_ui_id, test_file_1);
-        const auto mock_device_facade = device_facade.get();
+        const auto mock_device_facade = device_repository.get();
         EXPECT_CALL(
             *mock_device_facade,
             changePlayerFile(player_1_device_id, test_file_1)
