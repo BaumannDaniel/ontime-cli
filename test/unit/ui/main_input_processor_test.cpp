@@ -34,9 +34,9 @@ namespace tone::test {
 
     TEST_F(MainInputProcessorTest, process$addsPlayerToDeviceFacade) {
         const std::string input = std::format("add player {}", test_file_1);
-        const auto mock_device_facade = device_repository.get();
+        const auto mock_device_repository = device_repository.get();
         EXPECT_CALL(
-            *mock_device_facade,
+            *mock_device_repository,
             addPlayer(testing::Truly([&](const std::shared_ptr<Player>& player) {
                 auto correct_file = player->getPlayerInfo()->getFileName() == test_file_1;
                 auto correct_state = player->getDeviceState() == DeviceState::UN_INIT;
@@ -49,9 +49,9 @@ namespace tone::test {
     TEST_F(MainInputProcessorTest, process$startsPlayer) {
         device_id_manager->addIdMapping(player_1_ui_id, player_1_device_id, ui::PLAYER);
         const std::string input = std::format("start {}", player_1_ui_id);
-        const auto mock_device_facade = device_repository.get();
+        const auto mock_device_repository = device_repository.get();
         EXPECT_CALL(
-            *mock_device_facade,
+            *mock_device_repository,
             startPlayer(player_1_device_id)
         );
         main_input_processor.process(input);
@@ -59,11 +59,11 @@ namespace tone::test {
 
     TEST_F(MainInputProcessorTest, process$playsMp3File) {
         const std::string input = std::format("play {}", test_file_1);
-        const auto mock_device_facade = device_repository.get();
+        const auto mock_device_repository = device_repository.get();
         boost::uuids::uuid player_device_id;
         testing::InSequence seq;
         EXPECT_CALL(
-            *mock_device_facade,
+            *mock_device_repository,
             addPlayer(testing::Truly([&](const std::shared_ptr<Player>& player) {
                     player_device_id = player->getPlayerInfo()->getId();
                     auto correct_file = player->getPlayerInfo()->getFileName() == test_file_1;
@@ -74,7 +74,7 @@ namespace tone::test {
             )
         );
         EXPECT_CALL(
-            *mock_device_facade,
+            *mock_device_repository,
             startPlayer(testing::Truly([&](const boost::uuids::uuid &id) {
                     return id == player_device_id;
                     }
@@ -87,9 +87,9 @@ namespace tone::test {
     TEST_F(MainInputProcessorTest, process$stopsPlayer) {
         device_id_manager->addIdMapping(player_1_ui_id, player_1_device_id, ui::PLAYER);
         const std::string input = std::format("stop {}", player_1_ui_id);
-        const auto mock_device_facade = device_repository.get();
+        const auto mock_device_repository = device_repository.get();
         EXPECT_CALL(
-            *mock_device_facade,
+            *mock_device_repository,
             stopPlayer(player_1_device_id)
         );
         main_input_processor.process(input);
@@ -98,9 +98,9 @@ namespace tone::test {
     TEST_F(MainInputProcessorTest, process$removesPlayer) {
         device_id_manager->addIdMapping(player_1_ui_id, player_1_device_id, ui::PLAYER);
         const std::string input = std::format("remove {}", player_1_ui_id);
-        const auto mock_device_facade = device_repository.get();
+        const auto mock_device_repository = device_repository.get();
         EXPECT_CALL(
-            *mock_device_facade,
+            *mock_device_repository,
             removePlayer(player_1_device_id)
         );
         main_input_processor.process(input);
@@ -109,9 +109,9 @@ namespace tone::test {
     TEST_F(MainInputProcessorTest, process$changesFileOnPlayer) {
         device_id_manager->addIdMapping(player_1_ui_id, player_1_device_id, ui::PLAYER);
         const std::string input = std::format("file {} {}", player_1_ui_id, test_file_1);
-        const auto mock_device_facade = device_repository.get();
+        const auto mock_device_repository = device_repository.get();
         EXPECT_CALL(
-            *mock_device_facade,
+            *mock_device_repository,
             changePlayerFile(player_1_device_id, test_file_1)
         );
         main_input_processor.process(input);
