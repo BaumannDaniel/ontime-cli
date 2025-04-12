@@ -29,15 +29,15 @@ tone::ui::PlayerComponentBase::PlayerComponentBase(
 }
 
 ftxui::Element tone::ui::PlayerComponentBase::Render() {
-    auto formatted_player_id = std::format("Player {} ", boost::to_upper_copy(ui_id));
-    auto formatted_player_file_name = std::format(" {} ", player_info->getFileName());
-    auto player_sample_rate = player_info->getSampleRate();
-    auto file_length_seconds = player_info->getNumberOfPcmFrames() / player_sample_rate;
-    auto current_file_position = player_info->getCurrentPcmFrameNumber() / player_sample_rate;
-    auto show_hours = file_length_seconds >= 60 * 60;
-    auto formatted_position = secondsToDisplayFormat(current_file_position, show_hours);
-    auto formatted_length = secondsToDisplayFormat(file_length_seconds, show_hours);
-    auto formatted_progress = std::format(" {} / {}", formatted_position, formatted_length);
+    const auto formatted_player_id = std::format("Player {} ", boost::to_upper_copy(ui_id));
+    const auto formatted_player_file_name = std::format(" {} ", player_info->getFileName());
+    const auto player_sample_rate = player_info->getSampleRate();
+    const auto file_length_seconds = player_info->getNumberOfPcmFrames() / player_sample_rate;
+    const auto current_file_position = player_info->getCurrentPcmFrameNumber() / player_sample_rate;
+    const auto show_hours = file_length_seconds >= 60 * 60;
+    const auto formatted_position = secondsToDisplayFormat(current_file_position, show_hours);
+    const auto formatted_length = secondsToDisplayFormat(file_length_seconds, show_hours);
+    const auto formatted_progress = std::format(" {} / {}", formatted_position, formatted_length);
     return vbox(
                hbox(
                    ftxui::text(formatted_player_id),
@@ -50,8 +50,8 @@ ftxui::Element tone::ui::PlayerComponentBase::Render() {
 }
 
 ftxui::Component tone::ui::createPlayerComponent(
-    std::string ui_id,
-    std::shared_ptr<PlayerInfo> player_info
+    const std::string& ui_id,
+    const std::shared_ptr<PlayerInfo>& player_info
 ) {
     return ftxui::Make<PlayerComponentBase>(ui_id, player_info);
 }

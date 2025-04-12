@@ -1,6 +1,8 @@
 #include "main_screen.h"
 
 #include <utility>
+#include <ftxui/component/component.hpp>
+#include <ftxui/component/component_options.hpp>
 
 namespace tone::ui {
     class MainScreenBase : public ftxui::ComponentBase {
@@ -22,7 +24,7 @@ namespace tone::ui {
 
     public:
         MainScreenBase(
-            ftxui::Component editor_screen,
+            const ftxui::Component& editor_screen,
             std::shared_ptr<MainInputProcessor> main_input_processor,
             std::shared_ptr<ILogger> logger
         );
@@ -34,11 +36,11 @@ namespace tone::ui {
 }
 
 tone::ui::MainScreenBase::MainScreenBase(
-    ftxui::Component editor_screen,
+    const ftxui::Component& editor_screen,
     std::shared_ptr<MainInputProcessor> main_input_processor,
     std::shared_ptr<ILogger> logger
 ) : logger(std::move(logger)),
-    main_input_processor(main_input_processor),
+    main_input_processor(std::move(main_input_processor)),
     editor_screen(editor_screen) {
     main_input_option = {
         .multiline = false,
@@ -87,9 +89,9 @@ ftxui::Element tone::ui::MainScreenBase::Render() {
 }
 
 ftxui::Component tone::ui::createMainScreen(
-    ftxui::Component editor_screen,
-    std::shared_ptr<MainInputProcessor> main_input_processor,
-    std::shared_ptr<ILogger> logger
+    const ftxui::Component& editor_screen,
+    const std::shared_ptr<MainInputProcessor>& main_input_processor,
+    const std::shared_ptr<ILogger>& logger
 ) {
     return ftxui::Make<MainScreenBase>(editor_screen, main_input_processor, logger);
 }

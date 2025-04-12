@@ -4,16 +4,16 @@
 
 std::string fill_time_value(u_int64_t time_value);
 
-std::string tone::ui::secondsToDisplayFormat(u_int64_t seconds, bool use_hours) {
-    auto formatted_seconds = seconds % 60;
-    auto time_without_seconds = seconds - formatted_seconds;
-    auto minutes = time_without_seconds / 60;
+std::string tone::ui::secondsToDisplayFormat(const u_int64_t seconds, const bool use_hours) {
+    const auto formatted_seconds = seconds % 60;
+    const auto time_without_seconds = seconds - formatted_seconds;
+    const auto minutes = time_without_seconds / 60;
     if (!use_hours) {
         return std::format("{}:{}", fill_time_value(minutes), fill_time_value(formatted_seconds));
     }
-    auto formatted_minutes = minutes % 60;
-    auto hours_in_minutes = minutes - formatted_minutes;
-    auto hours = hours_in_minutes / 60;
+    const auto formatted_minutes = minutes % 60;
+    const auto hours_in_minutes = minutes - formatted_minutes;
+    const auto hours = hours_in_minutes / 60;
     return std::format(
         "{}:{}:{}",
         fill_time_value(hours),

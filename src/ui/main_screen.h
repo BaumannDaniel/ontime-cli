@@ -1,7 +1,5 @@
 #pragma once
-#include <ftxui/component/component.hpp>
 #include <ftxui/component/component_base.hpp>
-#include <ftxui/component/component_options.hpp>
 
 #include "main_input_processor.h"
 
@@ -12,8 +10,8 @@ namespace tone::ui {
     };
 
     ftxui::Component createMainScreen(
-        ftxui::Component editor_screen,
-        std::shared_ptr<MainInputProcessor> main_input_processor,
-        std::shared_ptr<ILogger> logger
+        const ftxui::Component& editor_screen,
+        const std::shared_ptr<MainInputProcessor>& main_input_processor,
+        const std::shared_ptr<ILogger>& logger
     );
 }

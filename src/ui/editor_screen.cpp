@@ -61,9 +61,9 @@ ftxui::Element tone::ui::EditorScreenBase::Render() {
 }
 
 ftxui::Component tone::ui::createEditorScreen(
-    std::shared_ptr<IDeviceRepository> device_facade,
-    std::shared_ptr<DeviceIdManager> device_id_mapper,
-    std::shared_ptr<ILogger> logger
+    const std::shared_ptr<IDeviceRepository>& device_facade,
+    const std::shared_ptr<DeviceIdManager>& device_id_mapper,
+    const std::shared_ptr<ILogger>& logger
 ) {
     return ftxui::Make<EditorScreenBase>(device_facade, device_id_mapper, logger);
 }
