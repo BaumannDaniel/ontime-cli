@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.28)
-project(ontime_cli CXX)
+project(tone_cli CXX)
 
 set(CMAKE_CXX_STANDARD 20)
 find_path(MINIAUDIO_INCLUDE_DIRS "miniaudio.h")
