@@ -19,7 +19,7 @@ tone::Player::Player(
 
 tone::Player::~Player() {
     if (this->state != UN_INIT) {
-        this->unInit();
+        this->Player::unInit();
     }
 }
 

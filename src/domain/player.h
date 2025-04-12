@@ -34,21 +34,21 @@ namespace tone {
             std::shared_ptr<ILogger> logger
         );
 
-        ~Player();
+        virtual ~Player();
 
-        void init();
+        virtual void init();
 
-        void start();
+        virtual void start();
 
-        void stop();
+        virtual void stop();
 
-        void unInit();
+        virtual void unInit();
 
-        void changeFile(std::string file_name);
+        virtual void changeFile(std::string file_name);
 
-        DeviceState getDeviceState() const;
+        virtual DeviceState getDeviceState() const;
 
-        std::shared_ptr<PlayerInfo> getPlayerInfo();
+        virtual std::shared_ptr<PlayerInfo> getPlayerInfo();
     };
 
     class PlayerInfo {
