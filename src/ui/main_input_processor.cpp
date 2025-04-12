@@ -18,14 +18,14 @@ tone::ui::MainInputProcessor::MainInputProcessor(
 
 void tone::ui::MainInputProcessor::process(std::string input) const {
     this->logger->log(std::format("MainInputProcessor - received input: {}", input));
-    auto parsedInput = parseInput(std::move(input));
+    const auto parsedInput = parseInput(std::move(input));
     if (parsedInput.empty()) return;
     if (parsedInput[0] == InputCommands::ADD) {
         if (parsedInput.size() < 3) return;
         if (parsedInput[1] == InputSubjects::PLAYER) {
-            addPlayer(parsedInput[2]);
-            return;
+            addPlayer(parsedInput[2]); // NOLINT
         }
+        return;
     }
     if (parsedInput[0] == InputCommands::PLAY) {
         if (parsedInput.size() < 2) return;
@@ -40,6 +40,7 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
         if (device_type != PLAYER) return;
         boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id).value();
         device_facade->startPlayer(device_id);
+        return;
     }
     if (parsedInput[0] == InputCommands::STOP) {
         if (parsedInput.size() < 2) return;
@@ -48,6 +49,7 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
         if (device_type != PLAYER) return;
         boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id).value();
         device_facade->stopPlayer(device_id);
+        return;
     }
     if (parsedInput[0] == InputCommands::REMOVE) {
         if (parsedInput.size() < 2) return;
@@ -56,6 +58,7 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
         if (device_type != PLAYER) return;
         boost::uuids::uuid device_id = device_id_mapper->getDeviceId(device_ui_id).value();
         device_facade->removePlayer(device_id);
+        return;
     }
     if (parsedInput[0] == InputCommands::FILE) {
         if (parsedInput.size() < 3) return;
@@ -68,8 +71,8 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
     }
 }
 
-boost::uuids::uuid tone::ui::MainInputProcessor::addPlayer(std::string file_name) const {
-    auto player = std::make_shared<Player>(file_name, logger);
+boost::uuids::uuid tone::ui::MainInputProcessor::addPlayer(const std::string& file_name) const {
+    const auto player = std::make_shared<Player>(file_name, logger);
     device_facade->addPlayer(player);
     return player->getPlayerInfo()->getId();
 }
