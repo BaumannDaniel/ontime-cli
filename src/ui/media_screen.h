@@ -6,7 +6,7 @@
 #include "logging.h"
 
 namespace tone::ui {
-    ftxui::Component createEditorScreen(
+    ftxui::Component createMediaScreen(
         const std::shared_ptr<IDeviceRepository>& device_facade,
         const std::shared_ptr<DeviceIdManager>& device_id_mapper,
         const std::shared_ptr<ILogger>& tone_logger

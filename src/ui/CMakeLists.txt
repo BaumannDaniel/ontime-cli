@@ -1,7 +1,7 @@
 add_library(
         tone_ui_lib
         main_screen.h main_screen.cpp
-        editor_screen.h editor_screen.cpp
+        media_screen.h media_screen.cpp
         player_component.h player_component.cpp
         main_input_processor.h main_input_processor.cpp
         input.h input.cpp

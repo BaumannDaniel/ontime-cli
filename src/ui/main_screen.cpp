@@ -14,7 +14,7 @@ namespace tone::ui {
         ftxui::Component main_input;
         int tab_selected = 0;
         const std::vector<std::string> tab_values{
-            MainScreenTabs::EDITOR,
+            MainScreenTabs::MEDIA,
             MainScreenTabs::SETTINGS,
         };
         ftxui::Component tab_toggle;

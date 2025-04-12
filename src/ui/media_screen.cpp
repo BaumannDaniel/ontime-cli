@@ -1,4 +1,4 @@
-#include "editor_screen.h"
+#include "media_screen.h"
 
 #include <map>
 #include <ftxui/component/component.hpp>
@@ -9,14 +9,14 @@
 
 
 namespace tone::ui {
-    class EditorScreenBase : public ftxui::ComponentBase {
+    class MediaScreenBase : public ftxui::ComponentBase {
         std::shared_ptr<ILogger> logger;
         std::shared_ptr<IDeviceRepository> device_facade;
         std::shared_ptr<DeviceIdManager> device_id_mapper;
         std::map<boost::uuids::uuid, ftxui::Component> player_components;
 
     public:
-        EditorScreenBase(
+        MediaScreenBase(
             std::shared_ptr<IDeviceRepository> device_facade,
             std::shared_ptr<DeviceIdManager> device_id_mapper,
             std::shared_ptr<ILogger> logger
@@ -26,7 +26,7 @@ namespace tone::ui {
     };
 }
 
-tone::ui::EditorScreenBase::EditorScreenBase(
+tone::ui::MediaScreenBase::MediaScreenBase(
     std::shared_ptr<IDeviceRepository> device_facade,
     std::shared_ptr<DeviceIdManager> device_id_mapper,
     std::shared_ptr<ILogger> logger
@@ -35,7 +35,7 @@ tone::ui::EditorScreenBase::EditorScreenBase(
     device_id_mapper(std::move(device_id_mapper)) {
 }
 
-ftxui::Element tone::ui::EditorScreenBase::Render() {
+ftxui::Element tone::ui::MediaScreenBase::Render() {
     auto players_info = device_facade->getPlayersInfo();
     std::set<boost::uuids::uuid> current_player_ids;
     for (const auto &player_info: players_info) {
@@ -60,10 +60,10 @@ ftxui::Element tone::ui::EditorScreenBase::Render() {
     return vbox(player_elements);
 }
 
-ftxui::Component tone::ui::createEditorScreen(
+ftxui::Component tone::ui::createMediaScreen(
     const std::shared_ptr<IDeviceRepository>& device_facade,
     const std::shared_ptr<DeviceIdManager>& device_id_mapper,
     const std::shared_ptr<ILogger>& logger
 ) {
-    return ftxui::Make<EditorScreenBase>(device_facade, device_id_mapper, logger);
+    return ftxui::Make<MediaScreenBase>(device_facade, device_id_mapper, logger);
 }

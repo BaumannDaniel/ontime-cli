@@ -5,12 +5,12 @@
 
 namespace tone::ui {
     struct MainScreenTabs {
-        static constexpr std::string EDITOR = "Editor";
+        static constexpr std::string MEDIA = "Media";
         static constexpr std::string SETTINGS = "Settings";
     };
 
     ftxui::Component createMainScreen(
-        const ftxui::Component& editor_screen,
+        const ftxui::Component& media_screen,
         const std::shared_ptr<MainInputProcessor>& main_input_processor,
         const std::shared_ptr<ILogger>& logger
     );
