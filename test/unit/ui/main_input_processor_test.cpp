@@ -10,6 +10,10 @@
 #include "../util/device_repository_mock.h"
 #include "../util/logger_mock.h"
 
+/**
+ * NOTE: Use parameterized tests to test input sanitation, when resolved:
+ * https://youtrack.jetbrains.com/issue/CPP-36051/Google-test-TESTP-in-CLion-Nova-No-run-button
+ */
 namespace tone::test {
     class MainInputProcessorTest : public testing::Test {
     protected:
