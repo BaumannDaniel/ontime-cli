@@ -11,10 +11,12 @@
 tone::ui::MainInputProcessor::MainInputProcessor(
     std::shared_ptr<IDeviceRepository> device_facade,
     std::shared_ptr<DeviceIdManager> device_id_mapper,
+    std::shared_ptr<IAppStateHolder> app_state_holder,
     std::shared_ptr<ILogger> logger
 ) : logger(std::move(logger)),
     device_facade(std::move(device_facade)),
-    device_id_mapper(std::move(device_id_mapper)) {
+    device_id_mapper(std::move(device_id_mapper)),
+    app_state_holder(std::move(app_state_holder)) {
 }
 
 void tone::ui::MainInputProcessor::process(std::string input) const {
@@ -23,6 +25,10 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
     if (parsedInput.empty()) return;
     auto command = parsedInput[0];
     boost::to_lower(command);
+    if (command == InputCommands::EXIT) {
+        app_state_holder->exit();
+        return;
+    }
     if (command == InputCommands::ADD) {
         if (parsedInput.size() < 3) return;
         auto subject = parsedInput[1];
@@ -80,7 +86,7 @@ void tone::ui::MainInputProcessor::process(std::string input) const {
     }
 }
 
-boost::uuids::uuid tone::ui::MainInputProcessor::addPlayer(const std::string& file_name) const {
+boost::uuids::uuid tone::ui::MainInputProcessor::addPlayer(const std::string &file_name) const {
     const auto player = std::make_shared<Player>(file_name, logger);
     device_facade->addPlayer(player);
     return player->getPlayerInfo()->getId();

@@ -2,6 +2,7 @@
 #include <memory>
 #include <string>
 
+#include "app_state_holder.h"
 #include "device_repository.h"
 #include "device_id_manager.h"
 #include "logging.h"
@@ -17,6 +18,7 @@ namespace tone::ui {
         static constexpr std::string STOP = "stop";
         static constexpr std::string RESET = "reset";
         static constexpr std::string FILE = "file";
+        static constexpr std::string EXIT = "exit";
     };
 
     struct InputSubjects {
@@ -27,6 +29,7 @@ namespace tone::ui {
         std::shared_ptr<ILogger> logger;
         std::shared_ptr<IDeviceRepository> device_facade;
         std::shared_ptr<DeviceIdManager> device_id_mapper;
+        std::shared_ptr<IAppStateHolder> app_state_holder;
 
         boost::uuids::uuid addPlayer(const std::string& file_name) const;
 
@@ -34,6 +37,7 @@ namespace tone::ui {
         MainInputProcessor(
             std::shared_ptr<IDeviceRepository> device_facade,
             std::shared_ptr<DeviceIdManager> device_id_mapper,
+            std::shared_ptr<IAppStateHolder> app_state_holder,
             std::shared_ptr<ILogger> logger
         );
 

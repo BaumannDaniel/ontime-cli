@@ -1,5 +1,6 @@
 add_library(
         tone_domain_lib
+        app_state_holder.h app_state_holder.cpp
         config.h
         #default_recorder.h default_recorder.cpp
         player.h player.cpp
