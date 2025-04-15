@@ -24,14 +24,16 @@ namespace tone::test {
         std::shared_ptr<ui::DeviceIdManager> device_id_manager;
         std::shared_ptr<MockLogger> logger;
         std::shared_ptr<MockDeviceRepository> device_repository;
+        std::shared_ptr<AppStateHolder> app_state_holder;
         ui::MainInputProcessor main_input_processor;
 
         MainInputProcessorTest()
             : device_id_manager(std::make_shared<ui::DeviceIdManager>()),
               logger(std::make_shared<MockLogger>()),
               device_repository(std::make_shared<MockDeviceRepository>()),
+              app_state_holder(std::make_shared<AppStateHolder>()),
               main_input_processor(
-                  ui::MainInputProcessor(device_repository, device_id_manager, logger)
+                  ui::MainInputProcessor(device_repository, device_id_manager, app_state_holder, logger)
               ) {
         }
     };
