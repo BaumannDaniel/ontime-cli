@@ -6,6 +6,7 @@ add_executable(
         ui/main_input_processor_test.cpp
         domain/app_state_holder_test.cpp
         domain/device_repository_test.cpp
+        util/app_state_holder_mock.h
         util/logger_mock.h
         util/device_repository_mock.h
         util/player_mock.h

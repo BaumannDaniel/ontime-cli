@@ -6,6 +6,7 @@
 #include "main_input_processor.h"
 #include "device_id_manager.h"
 #include "player.h"
+#include "../util/app_state_holder_mock.h"
 
 #include "../util/device_repository_mock.h"
 #include "../util/logger_mock.h"
@@ -24,19 +25,29 @@ namespace tone::test {
         std::shared_ptr<ui::DeviceIdManager> device_id_manager;
         std::shared_ptr<MockLogger> logger;
         std::shared_ptr<MockDeviceRepository> device_repository;
-        std::shared_ptr<AppStateHolder> app_state_holder;
+        std::shared_ptr<MockAppStateHolder> app_state_holder;
         ui::MainInputProcessor main_input_processor;
 
         MainInputProcessorTest()
             : device_id_manager(std::make_shared<ui::DeviceIdManager>()),
               logger(std::make_shared<MockLogger>()),
               device_repository(std::make_shared<MockDeviceRepository>()),
-              app_state_holder(std::make_shared<AppStateHolder>()),
+              app_state_holder(std::make_shared<MockAppStateHolder>()),
               main_input_processor(
                   ui::MainInputProcessor(device_repository, device_id_manager, app_state_holder, logger)
               ) {
         }
     };
+
+    TEST_F(MainInputProcessorTest, process$invokesExitOnAppStateHolder) {
+        const std::string input = "exit";
+        const auto mock_app_state_holder = app_state_holder.get();
+        EXPECT_CALL(
+            *mock_app_state_holder,
+            exit
+        ).Times(1);
+        main_input_processor.process(input);
+    }
 
     TEST_F(MainInputProcessorTest, process$addsPlayerToDeviceFacade) {
         const std::string input = std::format("add player {}", test_file_1);
