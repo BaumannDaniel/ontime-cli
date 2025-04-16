@@ -10,4 +10,5 @@ find_package(rxcpp CONFIG REQUIRED)
 find_package(GTest REQUIRED)
 
 add_subdirectory(src)
+enable_testing()
 add_subdirectory(test/unit)
