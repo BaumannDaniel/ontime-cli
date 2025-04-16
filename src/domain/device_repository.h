@@ -10,7 +10,7 @@ namespace tone {
     public:
         virtual ~IDeviceRepository() = default;
 
-        virtual void addPlayer(std::shared_ptr<Player> player) = 0;
+        virtual void addPlayer(std::shared_ptr<IPlayer> player) = 0;
 
         virtual void removePlayer(boost::uuids::uuid player_id) = 0;
 
@@ -20,14 +20,14 @@ namespace tone {
 
         virtual void changePlayerFile(boost::uuids::uuid player_id, std::string file_name) const = 0;
 
-        virtual std::vector<std::shared_ptr<PlayerInfo> > getPlayersInfo() const = 0;
+        virtual std::vector<std::shared_ptr<IPlayerInfo> > getPlayersInfo() const = 0;
     };
 
     class DeviceRepository : public IDeviceRepository {
-        std::map<boost::uuids::uuid, std::shared_ptr<Player> > players{};
+        std::map<boost::uuids::uuid, std::shared_ptr<IPlayer> > players{};
 
     public:
-        void addPlayer(std::shared_ptr<Player> player) override;
+        void addPlayer(std::shared_ptr<IPlayer> player) override;
 
         void removePlayer(boost::uuids::uuid player_id) override;
 
@@ -37,6 +37,6 @@ namespace tone {
 
         void changePlayerFile(boost::uuids::uuid player_id, std::string file_name) const override;
 
-        std::vector<std::shared_ptr<PlayerInfo> > getPlayersInfo() const override;
+        std::vector<std::shared_ptr<IPlayerInfo> > getPlayersInfo() const override;
     };
 }

@@ -3,6 +3,7 @@ add_library(
         app_state_holder.h app_state_holder.cpp
         config.h
         #default_recorder.h default_recorder.cpp
+        i_player.h
         player.h player.cpp
         device_state.h
         device_repository.h device_repository.cpp

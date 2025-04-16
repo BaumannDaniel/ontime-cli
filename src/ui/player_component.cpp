@@ -9,12 +9,12 @@
 namespace tone::ui {
     class PlayerComponentBase : public ftxui::ComponentBase {
         std::string ui_id;
-        std::shared_ptr<PlayerInfo> player_info;
+        std::shared_ptr<IPlayerInfo> player_info;
 
     public:
         PlayerComponentBase(
             std::string ui_id,
-            std::shared_ptr<PlayerInfo> player_info
+            std::shared_ptr<IPlayerInfo> player_info
         );
 
         ftxui::Element Render() override;
@@ -23,7 +23,7 @@ namespace tone::ui {
 
 tone::ui::PlayerComponentBase::PlayerComponentBase(
     std::string ui_id,
-    std::shared_ptr<PlayerInfo> player_info
+    std::shared_ptr<IPlayerInfo> player_info
 ) : ui_id(std::move(ui_id)),
     player_info(std::move(player_info)) {
 }
@@ -51,7 +51,7 @@ ftxui::Element tone::ui::PlayerComponentBase::Render() {
 
 ftxui::Component tone::ui::createPlayerComponent(
     const std::string& ui_id,
-    const std::shared_ptr<PlayerInfo>& player_info
+    const std::shared_ptr<IPlayerInfo>& player_info
 ) {
     return ftxui::Make<PlayerComponentBase>(ui_id, player_info);
 }
