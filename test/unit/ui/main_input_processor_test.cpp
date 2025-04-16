@@ -54,7 +54,7 @@ namespace tone::test {
         const auto mock_device_repository = device_repository.get();
         EXPECT_CALL(
             *mock_device_repository,
-            addPlayer(testing::Truly([&](const std::shared_ptr<Player>& player) {
+            addPlayer(testing::Truly([&](const std::shared_ptr<IPlayer>& player) {
                 auto correct_file = player->getPlayerInfo()->getFileName() == test_file_1;
                 auto correct_state = player->getDeviceState() == DeviceState::UN_INIT;
                 return correct_file && correct_state;
@@ -81,7 +81,7 @@ namespace tone::test {
         testing::InSequence seq;
         EXPECT_CALL(
             *mock_device_repository,
-            addPlayer(testing::Truly([&](const std::shared_ptr<Player>& player) {
+            addPlayer(testing::Truly([&](const std::shared_ptr<IPlayer>& player) {
                     player_device_id = player->getPlayerInfo()->getId();
                     auto correct_file = player->getPlayerInfo()->getFileName() == test_file_1;
                     auto correct_state = player->getDeviceState() == DeviceState::UN_INIT;
