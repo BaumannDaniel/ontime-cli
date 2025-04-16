@@ -5,6 +5,7 @@
 #include <boost/uuid/uuid.hpp>
 
 #include "device_state.h"
+#include "i_player.h"
 #include "logging.h"
 #include "player.h"
 
@@ -16,7 +17,7 @@ namespace tone {
         std::shared_ptr<PlayerInfo> player_info;
     };
 
-    class Player {
+    class Player : public IPlayer{
         DeviceState state = UN_INIT;
         std::shared_ptr<ILogger> logger = nullptr;
         ma_device device{};
@@ -34,24 +35,24 @@ namespace tone {
             std::shared_ptr<ILogger> logger
         );
 
-        virtual ~Player();
+        ~Player() override;
 
-        virtual void init();
+        void init() override;
 
-        virtual void start();
+        void start() override;
 
-        virtual void stop();
+        void stop() override;
 
-        virtual void unInit();
+        void unInit() override;
 
-        virtual void changeFile(std::string file_name);
+        void changeFile(std::string file_name) override;
 
-        virtual DeviceState getDeviceState() const;
+        DeviceState getDeviceState() const override;
 
-        virtual std::shared_ptr<PlayerInfo> getPlayerInfo();
+        std::shared_ptr<IPlayerInfo> getPlayerInfo() const override;
     };
 
-    class PlayerInfo {
+    class PlayerInfo : public IPlayerInfo{
         boost::uuids::uuid id;
         std::string file_name;
         uint64_t frame_count;
@@ -69,14 +70,14 @@ namespace tone {
 
         friend class Player;
 
-        boost::uuids::uuid getId() const;
+        boost::uuids::uuid getId() const override;
 
-        std::string getFileName() const;
+        std::string getFileName() const override;
 
-        uint64_t getNumberOfPcmFrames() const;
+        uint64_t getNumberOfPcmFrames() const override;
 
-        uint64_t getCurrentPcmFrameNumber() const;
+        uint64_t getCurrentPcmFrameNumber() const override;
 
-        u_int64_t getSampleRate() const;
+        u_int64_t getSampleRate() const override;
     };
 }

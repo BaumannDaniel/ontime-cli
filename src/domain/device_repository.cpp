@@ -2,7 +2,7 @@
 
 #include <utility>
 
-void tone::DeviceRepository::addPlayer(std::shared_ptr<Player> player) {
+void tone::DeviceRepository::addPlayer(std::shared_ptr<IPlayer> player) {
     auto player_id = player->getPlayerInfo()->getId();
     player->init();
     players.insert(
@@ -39,8 +39,8 @@ void tone::DeviceRepository::changePlayerFile(boost::uuids::uuid player_id, std:
 }
 
 
-std::vector<std::shared_ptr<tone::PlayerInfo> > tone::DeviceRepository::getPlayersInfo() const {
-    auto players_info = std::vector<std::shared_ptr<PlayerInfo> >{};
+std::vector<std::shared_ptr<tone::IPlayerInfo> > tone::DeviceRepository::getPlayersInfo() const {
+    auto players_info = std::vector<std::shared_ptr<IPlayerInfo> >{};
     for (const auto &player_pair: players) {
         players_info.push_back(player_pair.second->getPlayerInfo());
     }

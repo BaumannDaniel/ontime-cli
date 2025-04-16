@@ -97,7 +97,7 @@ tone::DeviceState tone::Player::getDeviceState() const {
     return this->state;
 }
 
-std::shared_ptr<tone::PlayerInfo> tone::Player::getPlayerInfo() {
+std::shared_ptr<tone::IPlayerInfo> tone::Player::getPlayerInfo() const {
     return player_info;
 }
 
