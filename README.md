@@ -8,6 +8,14 @@ All functionality of the cli can be used via a set of commands.
 
 ## Commands
 
+#### EXIT
+
+Exit the program.
+
+```
+exit
+```
+
 #### ADD
 
 Add a player for audio playback.
