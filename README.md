@@ -76,3 +76,15 @@ file [subject_id] [file]
 Example: file a /music/another_test.mp3
 ```
 
+# Build project
+
+```
+cmake --build --preset debug --target tone_cli
+```
+
+## Run Tests
+
+```
+cmake --build --preset debug
+ctest --preset test-debug
+```
