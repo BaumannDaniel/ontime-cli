@@ -2,12 +2,13 @@ add_library(
         tone_domain_lib
         app_state_holder.h app_state_holder.cpp
         config.h
-        #default_recorder.h default_recorder.cpp
         i_player.h
         player.h player.cpp
         device_state.h
         device_repository.h device_repository.cpp
         logging.h logging.cpp
+        recorder_i.h
+        recorder.h recorder.cpp
 )
 
 target_include_directories(
