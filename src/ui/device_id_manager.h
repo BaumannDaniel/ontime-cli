@@ -5,7 +5,8 @@
 
 namespace tone::ui {
     enum DeviceType {
-        PLAYER
+        PLAYER,
+        RECORDER
     };
 
     class DeviceIdManager {
