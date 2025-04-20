@@ -10,6 +10,7 @@ add_executable(
         util/logger_mock.h
         util/device_repository_mock.h
         util/player_mock.h
+        util/recorder_mock.h
 )
 target_link_libraries(
         tone_ui_unit_tests
