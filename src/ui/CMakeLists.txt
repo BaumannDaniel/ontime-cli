@@ -7,6 +7,7 @@ add_library(
         input.h input.cpp
         device_id_manager.h device_id_manager.cpp
         formatting.h formatting.cpp
+        recorder_component.h recorder_component.cpp
 )
 
 target_include_directories(
