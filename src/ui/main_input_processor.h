@@ -23,6 +23,7 @@ namespace tone::ui {
 
     struct InputSubjects {
         static constexpr std::string PLAYER = "player";
+        static constexpr std::string RECORDER = "recorder";
     };
 
     class MainInputProcessor {
@@ -32,6 +33,8 @@ namespace tone::ui {
         std::shared_ptr<IAppStateHolder> app_state_holder;
 
         boost::uuids::uuid addPlayer(const std::string& file_name) const;
+
+        boost::uuids::uuid addRecorder(const std::string& file_name) const;
 
     public:
         MainInputProcessor(
