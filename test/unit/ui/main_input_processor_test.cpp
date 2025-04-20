@@ -63,13 +63,26 @@ namespace tone::test {
         main_input_processor.process(input);
     }
 
+    TEST_F(MainInputProcessorTest, process$addsRecorderToDeviceFacade) {
+        const std::string input = std::format("add recorder {}", test_file_1);
+        const auto mock_device_repository = device_repository.get();
+        EXPECT_CALL(
+            *mock_device_repository,
+            addRecorder(testing::Truly([&](const std::shared_ptr<IRecorder>& player) {
+                auto correct_file = player->getRecorderInfo()->getFileName() == test_file_1;
+                return correct_file;
+                }))
+        ).Times(1);
+        main_input_processor.process(input);
+    }
+
     TEST_F(MainInputProcessorTest, process$startsPlayer) {
         device_id_manager->addIdMapping(player_1_ui_id, player_1_device_id, ui::PLAYER);
         const std::string input = std::format("start {}", player_1_ui_id);
         const auto mock_device_repository = device_repository.get();
         EXPECT_CALL(
             *mock_device_repository,
-            startPlayer(player_1_device_id)
+            startDevice(player_1_device_id)
         );
         main_input_processor.process(input);
     }
@@ -92,7 +105,7 @@ namespace tone::test {
         );
         EXPECT_CALL(
             *mock_device_repository,
-            startPlayer(testing::Truly([&](const boost::uuids::uuid &id) {
+            startDevice(testing::Truly([&](const boost::uuids::uuid &id) {
                     return id == player_device_id;
                     }
                 )
@@ -107,7 +120,7 @@ namespace tone::test {
         const auto mock_device_repository = device_repository.get();
         EXPECT_CALL(
             *mock_device_repository,
-            stopPlayer(player_1_device_id)
+            stopDevice(player_1_device_id)
         );
         main_input_processor.process(input);
     }
@@ -118,7 +131,7 @@ namespace tone::test {
         const auto mock_device_repository = device_repository.get();
         EXPECT_CALL(
             *mock_device_repository,
-            removePlayer(player_1_device_id)
+            removeDevice(player_1_device_id)
         );
         main_input_processor.process(input);
     }
@@ -129,7 +142,7 @@ namespace tone::test {
         const auto mock_device_repository = device_repository.get();
         EXPECT_CALL(
             *mock_device_repository,
-            changePlayerFile(player_1_device_id, test_file_1)
+            changeDeviceFile(player_1_device_id, test_file_1)
         );
         main_input_processor.process(input);
     }
