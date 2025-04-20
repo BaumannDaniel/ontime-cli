@@ -9,7 +9,7 @@
 namespace tone {
     class RecorderInfo;
 
-    class Recorder : IRecorder {
+    class Recorder : public IRecorder {
         DeviceState state = UN_INIT;
         std::shared_ptr<ILogger> logger = nullptr;
         std::shared_ptr<RecorderInfo> recorder_info = nullptr;
@@ -48,7 +48,7 @@ namespace tone {
 
     public:
         RecorderInfo(
-            boost::uuids::uuid player_id,
+            boost::uuids::uuid recorder_id,
             std::string file_name,
             uint64_t number_of_pcm_frames,
             uint64_t current_pcm_frame,

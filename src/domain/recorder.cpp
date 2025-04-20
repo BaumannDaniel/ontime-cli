@@ -75,3 +75,35 @@ std::shared_ptr<tone::IRecorderInfo> tone::Recorder::getRecorderInfo() const {
     return this->recorder_info;
 }
 
+tone::RecorderInfo::RecorderInfo(
+    boost::uuids::uuid recorder_id,
+    std::string file_name,
+    uint64_t n_pcm_frames,
+    uint64_t current_pcm_frame,
+    u_int64_t sample_rate
+) : id(recorder_id),
+    file_name(std::move(file_name)),
+    frame_count(n_pcm_frames),
+    file_current_pcm_frame(current_pcm_frame),
+    sample_rate(sample_rate) {
+}
+
+boost::uuids::uuid tone::RecorderInfo::getId() const {
+    return this->id;
+}
+
+std::string tone::RecorderInfo::getFileName() const {
+    return this->file_name;
+}
+
+uint64_t tone::RecorderInfo::getNumberOfPcmFrames() const {
+    return this->frame_count;
+}
+
+uint64_t tone::RecorderInfo::getCurrentPcmFrameNumber() const {
+    return this->file_current_pcm_frame;
+}
+
+u_int64_t tone::RecorderInfo::getSampleRate() const {
+    return this->sample_rate;
+}
