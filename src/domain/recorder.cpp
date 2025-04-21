@@ -13,7 +13,6 @@ tone::Recorder::Recorder(
             boost::uuids::random_generator()(),
             std::move(file_name),
             0,
-            0,
             44100
         )
     ) {
@@ -25,11 +24,14 @@ tone::Recorder::~Recorder() {
     }
 }
 
-void tone::Recorder::capture_callback(ma_device *pDevice, void *pOutput, const void *pInput, ma_uint32 frameCount) {
-    (void) pOutput;
-    auto *pEncoder = static_cast<ma_encoder *>(pDevice->pUserData);
-    if (pEncoder == nullptr) return;
-    ma_encoder_write_pcm_frames(pEncoder, pInput, frameCount, nullptr);
+void tone::Recorder::capture_callback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count) {
+    auto config = static_cast<RecorderCallbackConfig *>(p_device->pUserData);
+    (void) p_output;
+    auto *encoder = config->encoder;
+    if (encoder == nullptr) return;
+    ma_encoder_write_pcm_frames(encoder, p_input, frame_count, nullptr);
+    auto recorder_info = config->recorder_info;
+    recorder_info->frame_count += frame_count;
 }
 
 void tone::Recorder::init() {
@@ -47,7 +49,11 @@ void tone::Recorder::init() {
     this->deviceConfig.capture.channels = encoder.config.channels;
     this->deviceConfig.sampleRate = encoder.config.sampleRate;
     this->deviceConfig.dataCallback = capture_callback;
-    this->deviceConfig.pUserData = &encoder;
+    this->recorder_callback_config = {
+        .encoder = &encoder,
+        .recorder_info = this->recorder_info
+    };
+    this->deviceConfig.pUserData = &recorder_callback_config;
     if (ma_device_init(nullptr, &deviceConfig, &device) != MA_SUCCESS) {
         throw std::runtime_error("Failed to initialize recording device!");
     }
@@ -79,12 +85,10 @@ tone::RecorderInfo::RecorderInfo(
     boost::uuids::uuid recorder_id,
     std::string file_name,
     uint64_t n_pcm_frames,
-    uint64_t current_pcm_frame,
     u_int64_t sample_rate
 ) : id(recorder_id),
     file_name(std::move(file_name)),
     frame_count(n_pcm_frames),
-    file_current_pcm_frame(current_pcm_frame),
     sample_rate(sample_rate) {
 }
 
@@ -98,10 +102,6 @@ std::string tone::RecorderInfo::getFileName() const {
 
 uint64_t tone::RecorderInfo::getNumberOfPcmFrames() const {
     return this->frame_count;
-}
-
-uint64_t tone::RecorderInfo::getCurrentPcmFrameNumber() const {
-    return this->file_current_pcm_frame;
 }
 
 u_int64_t tone::RecorderInfo::getSampleRate() const {

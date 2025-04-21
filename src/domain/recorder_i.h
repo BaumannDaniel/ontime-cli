@@ -12,8 +12,6 @@ namespace tone {
 
         virtual uint64_t getNumberOfPcmFrames() const = 0;
 
-        virtual uint64_t getCurrentPcmFrameNumber() const = 0;
-
         virtual u_int64_t getSampleRate() const = 0;
     };
 

@@ -12,7 +12,7 @@
 namespace tone {
     class PlayerInfo;
 
-    struct CallbackConfig {
+    struct PlayerCallbackConfig {
         ma_decoder *decoder = nullptr;
         std::shared_ptr<PlayerInfo> player_info;
     };
@@ -25,7 +25,7 @@ namespace tone {
         ma_decoder_config decoder_config{};
         ma_decoder decoder{};
         std::shared_ptr<PlayerInfo> player_info = nullptr;
-        CallbackConfig callback_config;
+        PlayerCallbackConfig player_callback_config;
 
         static void playCallback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count);
 

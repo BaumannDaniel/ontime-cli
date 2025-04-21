@@ -24,7 +24,7 @@ tone::Player::~Player() {
 }
 
 void tone::Player::playCallback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count) {
-    auto config = static_cast<CallbackConfig *>(p_device->pUserData);
+    auto config = static_cast<PlayerCallbackConfig *>(p_device->pUserData);
     auto *pDecoder = config->decoder;
     if (pDecoder == nullptr) return;
     ma_decoder_read_pcm_frames(pDecoder, p_output, frame_count, nullptr);
@@ -50,11 +50,11 @@ void tone::Player::init() {
     ma_decoder_get_length_in_pcm_frames(&decoder, &pcm_length);
     this->player_info->frame_count = pcm_length;
     this->player_info->sample_rate = decoder.outputSampleRate;
-    this->callback_config = {
+    this->player_callback_config = {
         .decoder = &decoder,
         .player_info = player_info
     };
-    this->device_config.pUserData = &callback_config;
+    this->device_config.pUserData = &player_callback_config;
     if (ma_device_init(nullptr, &device_config, &device) != MA_SUCCESS) {
         logger->log("Failed to init playback!");
         throw std::runtime_error("Failed to initialize playback device!");
