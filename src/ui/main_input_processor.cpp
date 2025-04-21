@@ -92,7 +92,7 @@ boost::uuids::uuid tone::ui::MainInputProcessor::addPlayer(const std::string &fi
 }
 
 boost::uuids::uuid tone::ui::MainInputProcessor::addRecorder(const std::string &file_name) const {
-    const auto recorder =  std::make_shared<Recorder>(file_name, logger);
+    const auto recorder = std::make_shared<Recorder>(file_name, logger);
     device_facade->addRecorder(recorder);
     return recorder->getRecorderInfo()->getId();
 }
