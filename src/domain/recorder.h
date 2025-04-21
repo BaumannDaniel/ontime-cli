@@ -9,6 +9,11 @@
 namespace tone {
     class RecorderInfo;
 
+    struct RecorderCallbackConfig {
+        ma_encoder *encoder = nullptr;
+        std::shared_ptr<RecorderInfo> recorder_info;
+    };
+
     class Recorder : public IRecorder {
         DeviceState state = UN_INIT;
         std::shared_ptr<ILogger> logger = nullptr;
@@ -17,8 +22,9 @@ namespace tone {
         ma_device_config deviceConfig{};
         ma_encoder_config encoderConfig{};
         ma_encoder encoder{};
+        RecorderCallbackConfig recorder_callback_config{};
 
-        static void capture_callback(ma_device *pDevice, void *pOutput, const void *pInput, ma_uint32 frameCount);
+        static void capture_callback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count);
 
     public:
         Recorder(
@@ -43,7 +49,6 @@ namespace tone {
         boost::uuids::uuid id;
         std::string file_name;
         uint64_t frame_count;
-        uint64_t file_current_pcm_frame;
         u_int64_t sample_rate;
 
     public:
@@ -51,7 +56,6 @@ namespace tone {
             boost::uuids::uuid recorder_id,
             std::string file_name,
             uint64_t number_of_pcm_frames,
-            uint64_t current_pcm_frame,
             u_int64_t sample_rate
         );
 
@@ -62,8 +66,6 @@ namespace tone {
         std::string getFileName() const override;
 
         uint64_t getNumberOfPcmFrames() const override;
-
-        uint64_t getCurrentPcmFrameNumber() const override;
 
         u_int64_t getSampleRate() const override;
     };

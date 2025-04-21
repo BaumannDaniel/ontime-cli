@@ -5,6 +5,8 @@
 #include <boost/algorithm/string.hpp>
 
 #include "recorder_component.h"
+
+#include "formatting.h"
 #include "recorder_i.h"
 
 namespace tone::ui {
@@ -32,11 +34,17 @@ tone::ui::RecorderComponentBase::RecorderComponentBase(
 ftxui::Element tone::ui::RecorderComponentBase::Render() {
     const auto formatted_player_id = std::format("Recorder {} ", boost::to_upper_copy(ui_id));
     const auto formatted_player_file_name = std::format(" {} ", recorder_info->getFileName());
+    const auto recording_length_seconds = recorder_info->getNumberOfPcmFrames() / recorder_info->getSampleRate();
+    const auto show_hours = recording_length_seconds >= 60 * 60;
+    const auto formatted_recording_length = secondsToDisplayFormat(recording_length_seconds, show_hours);
+    const auto recording_length_display = std::format(" {} ", formatted_recording_length);
     return vbox(
                hbox(
                    ftxui::text(formatted_player_id),
                    ftxui::separator(),
-                   ftxui::text(formatted_player_file_name)
+                   ftxui::text(formatted_player_file_name),
+                   ftxui::separator(),
+                   ftxui::text(recording_length_display)
                )
            ) | ftxui::border;
 }
