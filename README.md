@@ -18,17 +18,23 @@ exit
 
 #### ADD
 
-Add a player for audio playback.
+Add a device for audio playback or recording.
+
+*Subjects:*
+- player
+- recorder
 
 ```
 add [subject] [file]
 
-Example: add player /music/test.mp3
+Example:
+add player /music/test.mp3
+add recorder /music/test.wav
 ```
 
 #### START
 
-Start a player by its id.
+Start a device by its id.
 
 ```
 start [subject_id]
@@ -48,7 +54,7 @@ Example: play /music/test.mp3
 
 #### STOP
 
-Stop a player by its id.
+Stop a device by its id.
 
 ```
 stop [subject_id]
@@ -58,7 +64,7 @@ Example: stop a
 
 #### REMOVE
 
-Remove a player by its id.
+Remove a device by its id.
 
 ```
 remove [subject_id]
@@ -68,7 +74,7 @@ Example: remove a
 
 #### FILE
 
-Change the file of a player.
+Change the file of a device.
 
 ```
 file [subject_id] [file]
