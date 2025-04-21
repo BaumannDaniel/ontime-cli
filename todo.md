@@ -35,3 +35,13 @@ Store previously used commands, in memory and in a file, if TONE_HOME is set.
 ## Playlists
 
 Provide functionality to create and use playlists.
+
+## Create Release Build variant
+
+Add a release cmake preset.
+
+## Integrate Release Logger
+
+Use release logger, when release variant is built.
+
+
