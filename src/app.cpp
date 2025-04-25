@@ -7,9 +7,25 @@
 #include "media_screen.h"
 #include "ui/main_screen.h"
 
+#ifdef BUILD_TYPE_DEBUG
+constexpr bool is_debug_build = true;
+#else
+constexpr bool is_debug_build = false;
+#endif
+
+#ifdef LOG_FILE
+constexpr bool log_file_defined = true;
+#else
+constexpr bool log_file_defined = false;
+#endif
+
 int main() {
-    auto log_file = "/home/daniel/Documents/tone_cli_workspace/log.txt";
-    auto logger = std::make_shared<tone::DebugLogger>(log_file);
+    std::shared_ptr<tone::ILogger> logger = nullptr;
+    if (is_debug_build && log_file_defined) {
+        logger = std::make_shared<tone::DebugLogger>(LOG_FILE);
+    } else {
+        logger = std::make_shared<tone::ReleaseLogger>();
+    }
     logger->log("----- Started Tone CLI -----");
     auto app_state_holder = std::make_shared<tone::AppStateHolder>();
     auto device_id_mapper = std::make_shared<tone::ui::DeviceIdManager>();

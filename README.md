@@ -84,6 +84,13 @@ Example: file a /music/another_test.mp3
 
 # Build project
 
+## Setup
+
+For local development, add a **local.cmake** file.\
+A template is available: **local_template.cmake**
+
+## Build tone_cli
+
 ```
 cmake --build --preset debug --target tone_cli
 ```

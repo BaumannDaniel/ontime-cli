@@ -9,6 +9,18 @@ find_package(Boost REQUIRED COMPONENTS algorithm)
 find_package(rxcpp CONFIG REQUIRED)
 find_package(GTest REQUIRED)
 
+if (EXISTS "${CMAKE_SOURCE_DIR}/local.cmake")
+    include("${CMAKE_SOURCE_DIR}/local.cmake")
+    message(STATUS "Included local.cmake")
+    add_compile_definitions(LOG_FILE="${LOG_FILE}")
+endif ()
+
+if (CMAKE_BUILD_TYPE STREQUAL "Release")
+    add_compile_definitions(BUILD_TYPE_RELEASE)
+else ()
+    add_compile_definitions(BUILD_TYPE_DEBUG)
+endif ()
+
 add_subdirectory(src)
 enable_testing()
 add_subdirectory(test/unit)
