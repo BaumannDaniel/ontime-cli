@@ -13,11 +13,16 @@ constexpr bool is_debug_build = true;
 constexpr bool is_debug_build = false;
 #endif
 
+#ifdef LOG_FILE
+constexpr bool log_file_defined = true;
+#else
+constexpr bool log_file_defined = false;
+#endif
+
 int main() {
     std::shared_ptr<tone::ILogger> logger = nullptr;
-    if (is_debug_build) {
-        auto log_file = "/home/daniel/Documents/tone_cli_workspace/log.txt";
-        logger = std::make_shared<tone::DebugLogger>(log_file);
+    if (is_debug_build && log_file_defined) {
+        logger = std::make_shared<tone::DebugLogger>(LOG_FILE);
     } else {
         logger = std::make_shared<tone::ReleaseLogger>();
     }
