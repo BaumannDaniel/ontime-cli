@@ -129,7 +129,7 @@ tone::PlayerInfo::PlayerInfo(
 }
 
 void tone::PlayerInfo::setFilename(std::string file_name) {
-    std::lock_guard lock(player_info_mutex);
+    std::unique_lock lock(player_info_mutex);
     this->file_name = std::move(file_name);
 }
 
@@ -138,8 +138,8 @@ boost::uuids::uuid tone::PlayerInfo::getId() const {
     return this->id;
 }
 
-std::string tone::PlayerInfo::getFileName() {
-    std::lock_guard lock(player_info_mutex);
+std::string tone::PlayerInfo::getFileName() const {
+    std::shared_lock lock(player_info_mutex);
     return this->file_name;
 }
 
