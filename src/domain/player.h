@@ -21,13 +21,13 @@ namespace tone {
 
     class Player : public IPlayer{
         std::mutex player_mutex;
-        DeviceState state = UN_INIT;
+        std::atomic<DeviceState> state = UN_INIT;
         std::shared_ptr<ILogger> logger = nullptr;
         ma_device device{};
         ma_device_config device_config{};
         ma_decoder_config decoder_config{};
         ma_decoder decoder{};
-        std::shared_ptr<PlayerInfo> player_info = nullptr;
+        const std::shared_ptr<PlayerInfo> player_info = nullptr;
         PlayerCallbackConfig player_callback_config;
 
         static void playCallback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count);

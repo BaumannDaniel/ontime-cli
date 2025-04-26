@@ -8,13 +8,14 @@
 tone::Player::Player(
     std::string file_name,
     std::shared_ptr<ILogger> logger
-) : logger(std::move(logger)) {
-    this->player_info = std::make_shared<PlayerInfo>(
-        boost::uuids::random_generator()(),
-        std::move(file_name),
-        0,
-        0,
-        0);
+) : logger(std::move(logger)),
+    player_info(std::make_shared<PlayerInfo>(
+            boost::uuids::random_generator()(),
+            std::move(file_name),
+            0,
+            0,
+            0)
+    ) {
 }
 
 tone::Player::~Player() {
