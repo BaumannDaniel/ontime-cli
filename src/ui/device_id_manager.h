@@ -11,7 +11,7 @@ namespace tone::ui {
     };
 
     class DeviceIdManager {
-        std::shared_mutex device_id_manager_mutex;
+        mutable std::shared_mutex device_id_manager_mutex;
         std::map<std::string, boost::uuids::uuid> ui_to_device_id_map;
         std::map<boost::uuids::uuid, std::string> device_to_ui_id_map;
         std::map<std::string, DeviceType> ui_id_to_device_type_map;
