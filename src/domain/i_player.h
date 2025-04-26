@@ -10,7 +10,7 @@ namespace tone {
 
         virtual boost::uuids::uuid getId() const = 0;
 
-        virtual std::string getFileName() const = 0;
+        virtual std::string getFileName() = 0;
 
         virtual uint64_t getNumberOfPcmFrames() const = 0;
 

@@ -3,6 +3,7 @@
 #include <string>
 #include <miniaudio.h>
 #include <boost/uuid/uuid.hpp>
+#include <atomic>
 
 #include "device_state.h"
 #include "i_player.h"
@@ -18,6 +19,7 @@ namespace tone {
     };
 
     class Player : public IPlayer{
+        std::mutex player_mutex;
         DeviceState state = UN_INIT;
         std::shared_ptr<ILogger> logger = nullptr;
         ma_device device{};
@@ -53,11 +55,14 @@ namespace tone {
     };
 
     class PlayerInfo : public IPlayerInfo{
-        boost::uuids::uuid id;
+        std::mutex player_info_mutex;
+        const boost::uuids::uuid id;
         std::string file_name;
-        uint64_t frame_count;
-        uint64_t file_current_pcm_frame;
-        u_int64_t sample_rate;
+        std::atomic<u_int64_t> frame_count;
+        std::atomic<u_int64_t> file_current_pcm_frame;
+        std::atomic<u_int64_t> sample_rate;
+
+    void setFilename(std::string file_name);
 
     public:
         PlayerInfo(
@@ -72,7 +77,7 @@ namespace tone {
 
         boost::uuids::uuid getId() const override;
 
-        std::string getFileName() const override;
+        std::string getFileName() override;
 
         uint64_t getNumberOfPcmFrames() const override;
 
