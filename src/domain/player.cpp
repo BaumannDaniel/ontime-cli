@@ -8,19 +8,18 @@
 tone::Player::Player(
     std::string file_name,
     std::shared_ptr<ILogger> logger
-) : logger(std::move(logger)){
-    this->player_info = std::make_shared<PlayerInfo>(
-        boost::uuids::random_generator()(),
-        std::move(file_name),
-        0,
-        0,
-        0);
+) : logger(std::move(logger)),
+    player_info(std::make_shared<PlayerInfo>(
+            boost::uuids::random_generator()(),
+            std::move(file_name),
+            0,
+            0,
+            0)
+    ) {
 }
 
 tone::Player::~Player() {
-    if (this->state != UN_INIT) {
-        this->Player::unInit();
-    }
+    this->Player::unInit();
 }
 
 void tone::Player::playCallback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count) {
@@ -37,6 +36,10 @@ void tone::Player::playCallback(ma_device *p_device, void *p_output, const void 
 
 
 void tone::Player::init() {
+    std::lock_guard lock(player_mutex);
+    if (this->state != UN_INIT) {
+        return;
+    }
     if (ma_decoder_init_file(player_info->file_name.c_str(), nullptr, &decoder) != MA_SUCCESS) {
         logger->log(std::format("Failed to init decoder for file: {}", player_info->file_name));
         throw std::runtime_error("Failed to initialize file decoder!");
@@ -65,6 +68,10 @@ void tone::Player::init() {
 
 
 void tone::Player::start() {
+    std::lock_guard lock(player_mutex);
+    if (this->state == STARTED || this->state == UN_INIT) {
+        return;
+    }
     ma_device_start(&device);
     logger->log("Playing!");
     this->state = STARTED;
@@ -72,12 +79,20 @@ void tone::Player::start() {
 }
 
 void tone::Player::stop() {
+    std::lock_guard lock(player_mutex);
+    if (this->state == STOPPED || this->state == UN_INIT) {
+        return;
+    }
     ma_device_stop(&device);
     this->state = STOPPED;
 }
 
 void tone::Player::unInit() {
     this->stop();
+    std::lock_guard lock(player_mutex);
+    if (this->state == UN_INIT) {
+        return;
+    }
     ma_device_uninit(&device);
     ma_decoder_uninit(&decoder);
     this->player_info->file_current_pcm_frame = 0;
@@ -88,7 +103,7 @@ void tone::Player::unInit() {
 
 void tone::Player::changeFile(std::string file_name) {
     this->unInit();
-    this->player_info->file_name = std::move(file_name);
+    this->player_info->setFilename(std::move(file_name));
     this->init();
 }
 
@@ -114,11 +129,18 @@ tone::PlayerInfo::PlayerInfo(
     sample_rate(sample_rate) {
 }
 
+void tone::PlayerInfo::setFilename(std::string file_name) {
+    std::unique_lock lock(player_info_mutex);
+    this->file_name = std::move(file_name);
+}
+
+
 boost::uuids::uuid tone::PlayerInfo::getId() const {
     return this->id;
 }
 
 std::string tone::PlayerInfo::getFileName() const {
+    std::shared_lock lock(player_info_mutex);
     return this->file_name;
 }
 

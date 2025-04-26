@@ -21,7 +21,6 @@ namespace tone::test {
         std::shared_ptr<RecorderInfo> recorder_info_ptr = std::make_shared<RecorderInfo>(
             boost::uuids::random_generator()(),
             test_file_1,
-            3,
             2,
             1
         );

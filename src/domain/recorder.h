@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <atomic>
 #include <miniaudio.h>
 
 #include "device_state.h"
@@ -15,9 +16,10 @@ namespace tone {
     };
 
     class Recorder : public IRecorder {
-        DeviceState state = UN_INIT;
+        std::mutex recorder_mutex;
+        std::atomic<DeviceState> state = UN_INIT;
         std::shared_ptr<ILogger> logger = nullptr;
-        std::shared_ptr<RecorderInfo> recorder_info = nullptr;
+        const std::shared_ptr<RecorderInfo> recorder_info = nullptr;
         ma_device device{};
         ma_device_config deviceConfig{};
         ma_encoder_config encoderConfig{};
@@ -46,10 +48,10 @@ namespace tone {
     };
 
     class RecorderInfo : public IRecorderInfo {
-        boost::uuids::uuid id;
+        const boost::uuids::uuid id;
         std::string file_name;
-        uint64_t frame_count;
-        u_int64_t sample_rate;
+        std::atomic<uint64_t> frame_count;
+        std::atomic<u_int64_t> sample_rate;
 
     public:
         RecorderInfo(

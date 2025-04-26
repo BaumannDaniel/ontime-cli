@@ -1,7 +1,3 @@
-## Improve thread safety
-
-Recorder and Player should be thread-safe.
-
 ## Improve error handling
 
 MainInputProcessor should catch errors thrown in recorders and players.
@@ -36,12 +32,9 @@ Store previously used commands, in memory and in a file, if TONE_HOME is set.
 
 Provide functionality to create and use playlists.
 
-## Create Release Build variant
+## Improve Logging
 
-Add a release cmake preset.
-
-## Integrate Release Logger
-
-Use release logger, when release variant is built.
+Improve logging by integrating logger
+in more classes and creating more log statements.
 
 

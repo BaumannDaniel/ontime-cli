@@ -29,7 +29,7 @@ int main() {
     logger->log("----- Started Tone CLI -----");
     auto app_state_holder = std::make_shared<tone::AppStateHolder>();
     auto device_id_mapper = std::make_shared<tone::ui::DeviceIdManager>();
-    auto device_repository = std::make_shared<tone::DeviceRepository>(tone::DeviceRepository());
+    auto device_repository = std::make_shared<tone::DeviceRepository>();
     auto main_input_processor = std::make_shared<tone::ui::MainInputProcessor>(
         device_repository,
         device_id_mapper,

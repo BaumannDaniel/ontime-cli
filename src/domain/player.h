@@ -3,6 +3,8 @@
 #include <string>
 #include <miniaudio.h>
 #include <boost/uuid/uuid.hpp>
+#include <atomic>
+#include <shared_mutex>
 
 #include "device_state.h"
 #include "i_player.h"
@@ -18,13 +20,14 @@ namespace tone {
     };
 
     class Player : public IPlayer{
-        DeviceState state = UN_INIT;
+        std::mutex player_mutex;
+        std::atomic<DeviceState> state = UN_INIT;
         std::shared_ptr<ILogger> logger = nullptr;
         ma_device device{};
         ma_device_config device_config{};
         ma_decoder_config decoder_config{};
         ma_decoder decoder{};
-        std::shared_ptr<PlayerInfo> player_info = nullptr;
+        const std::shared_ptr<PlayerInfo> player_info = nullptr;
         PlayerCallbackConfig player_callback_config;
 
         static void playCallback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count);
@@ -53,11 +56,14 @@ namespace tone {
     };
 
     class PlayerInfo : public IPlayerInfo{
-        boost::uuids::uuid id;
+        mutable std::shared_mutex player_info_mutex;
+        const boost::uuids::uuid id;
         std::string file_name;
-        uint64_t frame_count;
-        uint64_t file_current_pcm_frame;
-        u_int64_t sample_rate;
+        std::atomic<u_int64_t> frame_count;
+        std::atomic<u_int64_t> file_current_pcm_frame;
+        std::atomic<u_int64_t> sample_rate;
+
+    void setFilename(std::string file_name);
 
     public:
         PlayerInfo(

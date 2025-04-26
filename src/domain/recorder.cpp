@@ -19,9 +19,7 @@ tone::Recorder::Recorder(
 }
 
 tone::Recorder::~Recorder() {
-    if (this->state != UN_INIT) {
-        this->Recorder::unInit();
-    }
+    this->Recorder::unInit();
 }
 
 void tone::Recorder::capture_callback(ma_device *p_device, void *p_output, const void *p_input, ma_uint32 frame_count) {
@@ -35,6 +33,10 @@ void tone::Recorder::capture_callback(ma_device *p_device, void *p_output, const
 }
 
 void tone::Recorder::init() {
+    std::lock_guard lock(recorder_mutex);
+    if (this->state != UN_INIT) {
+        return;
+    }
     this->encoderConfig = ma_encoder_config_init(
         ma_encoding_format_wav,
         ma_format_f32,
@@ -61,17 +63,29 @@ void tone::Recorder::init() {
 }
 
 void tone::Recorder::start() {
+    std::lock_guard lock(recorder_mutex);
+    if (this->state == STARTED || this->state == UN_INIT) {
+        return;
+    }
     ma_device_start(&device);
     this->state = STARTED;
 }
 
 void tone::Recorder::stop() {
+    std::lock_guard lock(recorder_mutex);
+    if (this->state == STOPPED || this->state == UN_INIT) {
+        return;
+    }
     ma_device_stop(&device);
     this->state = STOPPED;
 }
 
 void tone::Recorder::unInit() {
     this->stop();
+    std::lock_guard lock(recorder_mutex);
+    if (this->state == UN_INIT) {
+        return;
+    }
     ma_device_uninit(&device);
     ma_encoder_uninit(&encoder);
     this->state = UN_INIT;
