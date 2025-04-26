@@ -29,6 +29,7 @@ namespace tone {
     };
 
     class DeviceRepository : public IDeviceRepository {
+        mutable std::shared_mutex device_repository_mutex;
         std::map<boost::uuids::uuid, std::shared_ptr<IPlayer> > players{};
         std::map<boost::uuids::uuid, std::shared_ptr<IRecorder> > recorders{};
 
